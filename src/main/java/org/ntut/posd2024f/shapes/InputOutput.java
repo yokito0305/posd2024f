@@ -30,15 +30,15 @@ public class InputOutput {
 
     public ArrayList<Shape> handleSort(ArrayList<Shape> Shapes, String compare, String order) {
         if (compare.equals("area")) {
-            if (order.equals("ascending")) {
+            if (order.equals("inc")) {
                 Collections.sort(Shapes, Sort.BY_AREA_ASCENDING);
-            } else if (order.equals("descending")) {
+            } else if (order.equals("dec")) {
                 Collections.sort(Shapes, Sort.BY_AREA_DESCENDING);
             }
         } else if (compare.equals("perimeter")) {
-            if (order.equals("ascending")) {
+            if (order.equals("inc")) {
                 Collections.sort(Shapes, Sort.BY_PERIMETER_ASCENDING);
-            } else if (order.equals("descending")) {
+            } else if (order.equals("dec")) {
                 Collections.sort(Shapes, Sort.BY_PERIMETER_DESCENDING);
             }
         }
