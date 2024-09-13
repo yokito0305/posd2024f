@@ -29,16 +29,16 @@ public class InputOutput {
     }
 
     public ArrayList<Shape> handleSort(ArrayList<Shape> Shapes, String compare, String order) {
-        if (compare.equals("area") || compare.equals("{area")) {
-            if (order.startsWith("inc")) {
+        if (compare.equals("area")) {
+            if (order.equals("inc")) {
                 Collections.sort(Shapes, Sort.BY_AREA_ASCENDING);
-            } else if (order.startsWith("dec")) {
+            } else if (order.equals("dec")) {
                 Collections.sort(Shapes, Sort.BY_AREA_DESCENDING);
             }
-        } else if (compare.equals("perimeter") || compare.equals("{perimeter")) {
-            if (order.startsWith("inc")) {
+        } else if (compare.equals("perimeter")) {
+            if (order.equals("inc")) {
                 Collections.sort(Shapes, Sort.BY_PERIMETER_ASCENDING);
-            } else if (order.startsWith("dec")) {
+            } else if (order.equals("dec")) {
                 Collections.sort(Shapes, Sort.BY_PERIMETER_DESCENDING);
             }
         }

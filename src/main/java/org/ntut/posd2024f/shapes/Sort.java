@@ -10,45 +10,25 @@ public class Sort{
 
     private static class ByAreaAscending implements Comparator<Shape> {
         public int compare(Shape left, Shape right){
-            if(left.area() < right.area())
-                return -1;
-            else if(left.area() == right.area())
-                return 0;
-            else
-                return 1;
+            return Double.compare(left.area(),right.area());
         }
     }
 
     private static class ByAreaDescending implements Comparator<Shape> {
         public int compare(Shape left, Shape right){
-            if(left.area() < right.area())
-                return 1;
-            else if(left.area() == right.area())
-                return 0;
-            else
-                return -1;
+            return Double.compare(right.area(),left.area());
         }
     }
 
     private static class ByPerimeterAscending implements Comparator<Shape> {
         public int compare(Shape left, Shape right){
-            if(left.perimeter() < right.perimeter())
-                return -1;
-            else if(left.perimeter() == right.perimeter())
-                return 0;
-            else
-                return 1;
+            return Double.compare(left.perimeter(),right.perimeter());
         }
     }
 
     private static class ByPerimeterDescending implements Comparator<Shape> {
         public int compare(Shape left, Shape right){
-            if(left.perimeter() < right.perimeter())
-                return 1;
-            else if(left.perimeter() == right.perimeter())
-                return 0;
-            else
-                return -1;
+            return Double.compare(right.perimeter(),left.perimeter());
         }
     }    
 }

@@ -1,100 +1,82 @@
 package org.ntut.posd2024f.shapes;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static org.junit.Assert.*;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class SortTest {
-    @Test
-    public void testByAreaAscending() throws Exception {
-        Circle circle = new Circle(3.0); // area = 28.27
-        Triangle triangle = new Triangle(3.0, 4.0, 5.0); // area = 6.0
-        Rectangle rectangle = new Rectangle(3.0, 4.0); // area = 12.0
+    private static Circle circle;
+    private static Rectangle rectangle;
+    private static Triangle triangle;
+    private static ArrayList<Shape> shapes;
 
-        ArrayList<Shape> shapes = new ArrayList<>();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        circle = new Circle(5.0); // area = 78.54, perimeter = 31.42
+        rectangle = new Rectangle(5.0, 10.0); // area = 50.0, perimeter = 30.0
+        triangle = new Triangle(2.0, 3.0, 4.0); // area = 2.9047, perimeter = 9.0
+        shapes = new ArrayList<Shape>();
         shapes.add(circle);
-        shapes.add(triangle);
         shapes.add(rectangle);
+        shapes.add(triangle);
+    }
 
-        Collections.sort(shapes, Sort.BY_AREA_ASCENDING);
+    /////////////////////////// Test Sort ///////////////////////////
+    @Test
+    public void testByAreaAscendingCompare() throws Exception {
+        Circle circle = new Circle(5.0); // area = 78.54
+        Circle circle2 = new Circle(10.0); // area = 314.16
 
-        assertEquals(triangle, shapes.get(0));
-        assertEquals(rectangle, shapes.get(1));
-        assertEquals(circle, shapes.get(2));
+        assertTrue(Sort.BY_AREA_ASCENDING.compare(circle, circle2) < 0);
+        assertTrue(Sort.BY_AREA_ASCENDING.compare(circle2, circle) > 0);
+        assertEquals(0, Sort.BY_AREA_ASCENDING.compare(circle, circle));
     }
 
     @Test
-    public void testByAreaDescending() throws Exception {
-        Circle circle = new Circle(3.0); // area = 28.27
-        Triangle triangle = new Triangle(3.0, 4.0, 5.0); // area = 6.0
-        Rectangle rectangle = new Rectangle(3.0, 4.0); // area = 12.0
+    public void testByAreaDescendingCompare() throws Exception {
+        Circle circle = new Circle(5.0); // area = 78.54
+        Circle circle2 = new Circle(10.0); // area = 314.16
 
-        ArrayList<Shape> shapes = new ArrayList<>();
-        shapes.add(circle);
-        shapes.add(triangle);
-        shapes.add(rectangle);
+        assertTrue(Sort.BY_AREA_DESCENDING.compare(circle, circle2) > 0);
+        assertTrue(Sort.BY_AREA_DESCENDING.compare(circle2, circle) < 0);
+        assertEquals(0, Sort.BY_AREA_DESCENDING.compare(circle, circle));
+    }
 
-        Collections.sort(shapes, Sort.BY_AREA_DESCENDING);
+    @Test
+    public void testByPerimeterAscendingCompare() throws Exception {
+        Circle circle = new Circle(5.0); // perimeter = 31.42
+        Circle circle2 = new Circle(10.0); // perimeter = 62.83
 
+        assertTrue(Sort.BY_PERIMETER_ASCENDING.compare(circle, circle2) < 0);
+        assertTrue(Sort.BY_PERIMETER_ASCENDING.compare(circle2, circle) > 0);
+        assertEquals(0, Sort.BY_PERIMETER_ASCENDING.compare(circle, circle));
+    }
+
+    @Test
+    public void testByPerimeterDescendingCompare() throws Exception {
+        Circle circle = new Circle(5.0); // perimeter = 31.42
+        Circle circle2 = new Circle(10.0); // perimeter = 62.83
+
+        assertTrue(Sort.BY_PERIMETER_DESCENDING.compare(circle, circle2) > 0);
+        assertTrue(Sort.BY_PERIMETER_DESCENDING.compare(circle2, circle) < 0);
+        assertEquals(0, Sort.BY_PERIMETER_DESCENDING.compare(circle, circle));
+    }
+
+    /////////////////////////// Test HandleSort ///////////////////////////
+    @Test
+    public void testHandleSortByInvalidArgs() throws Exception {
+        shapes = new InputOutput().handleSort(shapes, "invalid", "invalid");
         assertEquals(circle, shapes.get(0));
         assertEquals(rectangle, shapes.get(1));
         assertEquals(triangle, shapes.get(2));
     }
 
-    @Test
-    public void testByPerimeterAscending() throws Exception {
-        Circle circle = new Circle(3.0); // perimeter = 18.85
-        Triangle triangle = new Triangle(3.0, 4.0, 5.0); // perimeter = 12.0
-        Rectangle rectangle = new Rectangle(3.0, 4.0); // perimeter = 14.0
-
-        ArrayList<Shape> shapes = new ArrayList<>();
-        shapes.add(circle);
-        shapes.add(triangle);
-        shapes.add(rectangle);
-
-        Collections.sort(shapes, Sort.BY_PERIMETER_ASCENDING);
-
-        assertEquals(triangle, shapes.get(0));
-        assertEquals(rectangle, shapes.get(1));
-        assertEquals(circle, shapes.get(2));
-    }
-
-    @Test
-    public void testByPerimeterDescending() throws Exception {
-        Circle circle = new Circle(3.0); // perimeter = 18.85
-        Triangle triangle = new Triangle(3.0, 4.0, 5.0); // perimeter = 12.0
-        Rectangle rectangle = new Rectangle(3.0, 4.0); // perimeter = 14.0
-
-        ArrayList<Shape> shapes = new ArrayList<>();
-        shapes.add(circle);
-        shapes.add(triangle);
-        shapes.add(rectangle);
-
-        Collections.sort(shapes, Sort.BY_PERIMETER_DESCENDING);
-
-        assertEquals(circle, shapes.get(0));
-        assertEquals(rectangle, shapes.get(1));
-        assertEquals(triangle, shapes.get(2));
-    }
-
-    // Test InputOutput.java handleSort method
     @Test
     public void testHandleSortByAreaAscending() throws Exception {
-        Circle circle = new Circle(3.0); // area = 28.27
-        Triangle triangle = new Triangle(3.0, 4.0, 5.0); // area = 6.0
-        Rectangle rectangle = new Rectangle(3.0, 4.0); // area = 12.0
-
-        ArrayList<Shape> shapes = new ArrayList<>();
-        shapes.add(circle);
-        shapes.add(triangle);
-        shapes.add(rectangle);
-
-        InputOutput io = new InputOutput();
-        shapes = io.handleSort(shapes, "area", "inc");
-
+        shapes = new InputOutput().handleSort(shapes, "area", "inc");
         assertEquals(triangle, shapes.get(0));
         assertEquals(rectangle, shapes.get(1));
         assertEquals(circle, shapes.get(2));
@@ -102,18 +84,7 @@ public class SortTest {
 
     @Test
     public void testHandleSortByAreaDescending() throws Exception {
-        Circle circle = new Circle(3.0); // area = 28.27
-        Triangle triangle = new Triangle(3.0, 4.0, 5.0); // area = 6.0
-        Rectangle rectangle = new Rectangle(3.0, 4.0); // area = 12.0
-
-        ArrayList<Shape> shapes = new ArrayList<>();
-        shapes.add(circle);
-        shapes.add(triangle);
-        shapes.add(rectangle);
-
-        InputOutput io = new InputOutput();
-        shapes = io.handleSort(shapes, "area", "dec");
-
+        shapes = new InputOutput().handleSort(shapes, "area", "dec");
         assertEquals(circle, shapes.get(0));
         assertEquals(rectangle, shapes.get(1));
         assertEquals(triangle, shapes.get(2));
@@ -121,18 +92,7 @@ public class SortTest {
 
     @Test
     public void testHandleSortByPerimeterAscending() throws Exception {
-        Circle circle = new Circle(3.0); // perimeter = 18.85
-        Triangle triangle = new Triangle(3.0, 4.0, 5.0); // perimeter = 12.0
-        Rectangle rectangle = new Rectangle(3.0, 4.0); // perimeter = 14.0
-
-        ArrayList<Shape> shapes = new ArrayList<>();
-        shapes.add(circle);
-        shapes.add(triangle);
-        shapes.add(rectangle);
-
-        InputOutput io = new InputOutput();
-        shapes = io.handleSort(shapes, "perimeter", "inc");
-
+        shapes = new InputOutput().handleSort(shapes, "perimeter", "inc");
         assertEquals(triangle, shapes.get(0));
         assertEquals(rectangle, shapes.get(1));
         assertEquals(circle, shapes.get(2));
@@ -140,18 +100,7 @@ public class SortTest {
 
     @Test
     public void testHandleSortByPerimeterDescending() throws Exception {
-        Circle circle = new Circle(3.0); // perimeter = 18.85
-        Triangle triangle = new Triangle(3.0, 4.0, 5.0); // perimeter = 12.0
-        Rectangle rectangle = new Rectangle(3.0, 4.0); // perimeter = 14.0
-
-        ArrayList<Shape> shapes = new ArrayList<>();
-        shapes.add(circle);
-        shapes.add(triangle);
-        shapes.add(rectangle);
-
-        InputOutput io = new InputOutput();
-        shapes = io.handleSort(shapes, "perimeter", "dec");
-
+        shapes = new InputOutput().handleSort(shapes, "perimeter", "dec");
         assertEquals(circle, shapes.get(0));
         assertEquals(rectangle, shapes.get(1));
         assertEquals(triangle, shapes.get(2));
