@@ -9,13 +9,7 @@ import org.junit.rules.ExpectedException;
 
 @SuppressWarnings("unused")
 public class CircleTest {
-    private static Circle circle;
-    
-    @BeforeClass
-    public static void setUp() throws Exception {
-        // 初始化全域變數
-        circle = new Circle(5.0);
-    }
+    private static double radius = 5;
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
@@ -41,17 +35,20 @@ public class CircleTest {
     }
 
     @Test
-    public void testArea() {
-        assertEquals(78.54, circle.area(), 0.01);
+    public void testArea() throws Exception {
+        Circle circle = new Circle(radius);
+        assertEquals(Math.PI * radius * radius, circle.area(), 0.01);
     }
 
     @Test
-    public void testPerimeter() {
-        assertEquals(31.42, circle.perimeter(), 0.01);
+    public void testPerimeter() throws Exception {
+        Circle circle = new Circle(radius);
+        assertEquals(Math.PI * 2 * radius, circle.perimeter(), 0.01);
     }
 
     @Test
-    public void testToString() {
-        assertEquals("Circle 5.0", circle.toString());
+    public void testToString() throws Exception {
+        Circle circle = new Circle(radius);
+        assertEquals("Circle " + Double.toString(radius), circle.toString());
     }
 }

@@ -9,13 +9,8 @@ import org.junit.rules.ExpectedException;
 
 @SuppressWarnings("unused")
 public class RectangleTest {
-    private static Rectangle rectangle;
-
-    @BeforeClass
-    public static void setUp() throws Exception {
-        // 初始化全域變數
-        rectangle = new Rectangle(5.0, 10.0);
-    }
+    private static double length = 5;
+    private static double width = 10;
     
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
@@ -54,17 +49,20 @@ public class RectangleTest {
     }
 
     @Test
-    public void testArea() {
-        assertEquals(50.0, rectangle.area(), 0.01);
+    public void testArea() throws Exception {
+        Rectangle rectangle = new Rectangle(length, width);
+        assertEquals(length * width, rectangle.area(), 0.01);
     }
 
     @Test
-    public void testPerimeter() {
-        assertEquals(30.0, rectangle.perimeter(), 0.01);
+    public void testPerimeter() throws Exception {
+        Rectangle rectangle = new Rectangle(length, width);
+        assertEquals(2 * (length + width), rectangle.perimeter(), 0.01);
     }
 
     @Test
-    public void testToString() {
-        assertEquals("Rectangle 5.0 10.0", rectangle.toString());
+    public void testToString() throws Exception {
+        Rectangle rectangle = new Rectangle(length, width);
+        assertEquals("Rectangle " + Double.toString(length) + " " + Double.toString(width), rectangle.toString());
     }
 }

@@ -11,13 +11,18 @@ import org.junit.rules.ExpectedException;
 
 @SuppressWarnings("unused")
 public class TriangleTest {
-    private static Triangle triangle;
+    private static double side1 = 2;
+    private static double side2 = 3;
+    private static double side3 = 4;
+    private static double area;
+    private static double perimeter;
 
     @BeforeClass
     public static void setUp() throws Exception {
-        // 初始化全域變數
-        triangle = new Triangle(3.0, 4.0, 5.0);
-    }   
+        perimeter = side1 + side2 + side3;
+        double s = perimeter / 2;
+        area = Math.sqrt(s * (s - side1) * (s - side2) * (s - side3));
+    }
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
@@ -78,17 +83,21 @@ public class TriangleTest {
     }
 
     @Test
-    public void testArea() {
-        assertEquals(6.0, triangle.area(), 0.01);
+    public void testArea()  throws Exception {
+        Triangle triangle = new Triangle(side1, side2, side3);
+        assertEquals(area, triangle.area(), 0.01);
     }
 
     @Test
-    public void testPerimeter() {
-        assertEquals(12.0, triangle.perimeter(), 0.01);
+    public void testPerimeter() throws Exception {
+        Triangle triangle = new Triangle(side1, side2, side3);
+        assertEquals(perimeter, triangle.perimeter(), 0.01);
     }
 
     @Test
-    public void testToString() {
-        assertEquals("Triangle 3.0 4.0 5.0", triangle.toString());
+    public void testToString() throws Exception {
+        Triangle triangle = new Triangle(side1, side2, side3);
+        assertEquals("Triangle " + Double.toString(side1) + " " + Double.toString(side2) + " " + Double.toString(side3), 
+                        triangle.toString());
     }
 }
