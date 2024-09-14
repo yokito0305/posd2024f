@@ -29,6 +29,6 @@ public class Triangle implements Shape{
     }
 
     public String toString() {
-        return "Triangle " + a + " " + b + " " + c;
+        return "Triangle " + Double.toString(a) + " " + Double.toString(b) + " " + Double.toString(c);
     }
 }

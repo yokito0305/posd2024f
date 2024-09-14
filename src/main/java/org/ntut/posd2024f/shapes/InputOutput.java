@@ -6,40 +6,46 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class InputOutput {
     public InputOutput() {
     }
 
     public ArrayList<Shape> handleInput(String inputFileName) throws NumberFormatException, Exception {
-        File file = new File(inputFileName);
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        String str;
-        ArrayList<Shape> Shapes = new ArrayList<Shape>();
-        while ((str = br.readLine()) != null) {
-            try {
-                Shapes.add(ConstructShape(str));
-            } catch (Exception e) {
-                continue;
+        try {
+            File file = new File(inputFileName);
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            String str;
+            ArrayList<Shape> Shapes = new ArrayList<Shape>();
+            while ((str = br.readLine()) != null) {
+                try {
+                    Shapes.add(ConstructShape(str));
+                } catch (Exception e) {
+                    continue;
+                }
             }
+            br.close();
+            
+            return Shapes;
+        } catch (IOException e) {
+            throw new IOException("File not found!");
         }
-        br.close();
-        return Shapes;
+
     }
 
     public ArrayList<Shape> handleSort(ArrayList<Shape> Shapes, String compare, String order) {
         if (compare.equals("area")) {
             if (order.equals("inc")) {
-                Collections.sort(Shapes, Sort.BY_AREA_ASCENDING);
+                Shapes.sort(Sort.BY_AREA_ASCENDING);
             } else if (order.equals("dec")) {
-                Collections.sort(Shapes, Sort.BY_AREA_DESCENDING);
+                Shapes.sort(Sort.BY_AREA_DESCENDING);
             }
         } else if (compare.equals("perimeter")) {
             if (order.equals("inc")) {
-                Collections.sort(Shapes, Sort.BY_PERIMETER_ASCENDING);
+                Shapes.sort(Sort.BY_PERIMETER_ASCENDING);
             } else if (order.equals("dec")) {
-                Collections.sort(Shapes, Sort.BY_PERIMETER_DESCENDING);
+                Shapes.sort(Sort.BY_PERIMETER_DESCENDING);
             }
         }
         return Shapes;
@@ -64,7 +70,8 @@ public class InputOutput {
         } else if (tokens[0].equals("Rectangle")) {
             return new Rectangle(Double.parseDouble(tokens[1]), Double.parseDouble(tokens[2]));
         } else if (tokens[0].equals("Triangle")) {
-            return new Triangle(Double.parseDouble(tokens[1]), Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]));
+            return new Triangle(Double.parseDouble(tokens[1]), Double.parseDouble(tokens[2]),
+                    Double.parseDouble(tokens[3]));
         } else {
             throw new Exception("Invalid shape!");
         }
