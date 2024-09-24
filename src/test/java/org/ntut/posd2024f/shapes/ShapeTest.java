@@ -20,6 +20,9 @@ public class ShapeTest {
     private static Rectangle rectangle;
     private static ArrayList<Shape> shapes;
 
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
+
     @BeforeClass
     public static void setUp() throws Exception {
         // 初始化全域變數
@@ -68,5 +71,14 @@ public class ShapeTest {
         Circle circle = new Circle(5.0);
         Iterator<Shape> iterator = circle.iterator();
         assertEquals(null, iterator.next());
+    }
+
+    @Test
+    public void testCircleAdd() {
+        expectedEx.expect(ShapeException.class);
+        expectedEx.expectMessage("Illegal Operation");
+        Circle circle = new Circle(5.0);
+        Rectangle rectangle = new Rectangle(3.0, 4.0);
+        circle.add(rectangle);
     }
 }

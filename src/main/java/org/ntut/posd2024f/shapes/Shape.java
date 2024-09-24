@@ -7,6 +7,7 @@ public interface Shape {
     public double perimeter();
     public String toString();
     public default void add(Shape shape) {
+        throw new ShapeException("Illegal Operation");
     }
     public default Iterator<Shape> iterator() {
         return new NullIterator();
