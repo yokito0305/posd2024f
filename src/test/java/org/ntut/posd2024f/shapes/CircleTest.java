@@ -15,40 +15,34 @@ public class CircleTest {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
-    public void testConstructor() throws Exception {
+    public void testConstructor() throws ShapeException {
         // e.g. Circle c = new Circle(...)
         Circle circle = new Circle(5.0);
     }
 
     @Test
-    public void testConstructorWithNegativeRadius() throws Exception {
-        expectedEx.expect(Exception.class);
+    public void testConstructorWithNegativeRadius() throws ShapeException {
+        expectedEx.expect(ShapeException.class);
         expectedEx.expectMessage("It's not a circle!");
         Circle circle = new Circle(-5.0);
     }
 
     @Test
-    public void testConstructorWithZeroRadius() throws Exception {
-        expectedEx.expect(Exception.class);
+    public void testConstructorWithZeroRadius() throws ShapeException {
+        expectedEx.expect(ShapeException.class);
         expectedEx.expectMessage("It's not a circle!");
         Circle circle = new Circle(0);
     }
 
     @Test
-    public void testArea() throws Exception {
+    public void testArea() throws ShapeException {
         Circle circle = new Circle(radius);
         assertEquals(Math.PI * radius * radius, circle.area(), 0.01);
     }
 
     @Test
-    public void testPerimeter() throws Exception {
+    public void testPerimeter() throws ShapeException {
         Circle circle = new Circle(radius);
         assertEquals(Math.PI * 2 * radius, circle.perimeter(), 0.01);
-    }
-
-    @Test
-    public void testToString() throws Exception {
-        Circle circle = new Circle(radius);
-        assertEquals("Circle " + Double.toString(radius), circle.toString());
     }
 }

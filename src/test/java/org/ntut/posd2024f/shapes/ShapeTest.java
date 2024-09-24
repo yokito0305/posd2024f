@@ -3,6 +3,10 @@ package org.ntut.posd2024f.shapes;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.text.AbstractDocument.Content;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -19,8 +23,17 @@ public class ShapeTest {
     @BeforeClass
     public static void setUp() throws Exception {
         // 初始化全域變數
+        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
+        TwoDimensionalVector side2 = new TwoDimensionalVector(-3, 4);
+        TwoDimensionalVector side3 = new TwoDimensionalVector(0, -4);
+
+        List<TwoDimensionalVector> vectors = new ArrayList<>();
+        vectors.add(side1);
+        vectors.add(side2);
+        vectors.add(side3);
+      
         circle = new Circle(5.0); // area = 78.54 perimeter = 31.42
-        triangle = new Triangle(3.0, 4.0, 5.0); // area = 6.0 perimeter = 12.0
+        triangle = new Triangle(vectors); // area = 6.0 perimeter = 12.0
         rectangle = new Rectangle(3.0, 4.0); // area = 12.0 perimeter = 14.0
 
         shapes = new ArrayList<>();
@@ -44,9 +57,16 @@ public class ShapeTest {
     }
 
     @Test
-    public void testByToString() throws Exception {
-        assertEquals(circle.toString(), shapes.get(0).toString());
-        assertEquals(triangle.toString(), shapes.get(1).toString());
-        assertEquals(rectangle.toString(), shapes.get(2).toString());
+    public void testCircleReturnNullIterator() {
+        Circle circle = new Circle(5.0);
+        Iterator<Shape> iterator = circle.iterator();
+        assertEquals(false, iterator.hasNext());
+    }
+
+    @Test
+    public void testCircleNext() {
+        Circle circle = new Circle(5.0);
+        Iterator<Shape> iterator = circle.iterator();
+        assertEquals(null, iterator.next());
     }
 }

@@ -4,9 +4,9 @@ public class Rectangle implements Shape {
     private double length;
     private double width;
 
-    public Rectangle(double length, double width) throws Exception {
+    public Rectangle(double length, double width) throws ShapeException {
         if(length <= 0 || width <= 0) {
-            throw new Exception("It's not a rectangle!");
+            throw new ShapeException("It's not a rectangle!");
         }
         this.length = length;
         this.width = width;
@@ -18,9 +18,5 @@ public class Rectangle implements Shape {
     
     public double perimeter() {
         return 2 * (length + width);
-    }
-
-    public String toString() {
-        return "Rectangle " + length + " " + width;
     }
 }

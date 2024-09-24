@@ -2,26 +2,23 @@ package org.ntut.posd2024f.shapes;
 
 import java.util.List;
 
-public class Triangle implements Shape{
-    private double side1;
-    private double side2;
-    private double side3;
-
-    Triangle(List<TwoDimensionalVector> vectors) throws ShapeException {
-        if (vectors.size() != 3) {
-            throw new ShapeException("It's not a triangle!");
+public class ConvexPolygon implements Shape {
+    private List<TwoDimensionalVector> vectors;
+    
+    /**
+     * The vectors which used to create the ConvexPolygon need to be sorted in the clockwise direction or counterclockwise direction, 
+     * the unsorted vectors are unavailable and needs to throw the ShapeException.
+     * @param vectors
+     */
+    public ConvexPolygon(List<TwoDimensionalVector> vectors) throws ShapeException {
+        if(vectors.size() < 3) {
+            throw new ShapeException("It's not a convex polygon!");
         }
         if (!isConvex(vectors)) {
-            throw new ShapeException("It's not a triangle!");
+            throw new ShapeException("It's not a convex polygon!");
         }
 
-        this.side1 = vectors.get(0).length();
-        this.side2 = vectors.get(1).length();
-        this.side3 = vectors.get(2).length();
-
-        if (side1 + side2 <= side3 || side1 + side3 <= side2 || side2 + side3 <= side1) {
-            throw new ShapeException("It's not a triangle!");
-        }
+        this.vectors = vectors;
     }
 
     /** Function to check if the polygon is
@@ -61,11 +58,22 @@ public class Triangle implements Shape{
     }
 
     public double area() {
-        double s = (side1 + side2 + side3) / 2;
-        return Math.sqrt(s * (s - side1) * (s - side2) * (s - side3));
+        double area = 0.0;
+        int n = vectors.size();
+        for (int i = 0; i < n; i += 2) {
+            TwoDimensionalVector current = vectors.get(i);
+            TwoDimensionalVector next = vectors.get((i + 1) % n);
+            area += current.cross(next);
+        }
+        return Math.abs(area) / 2.0;
     }
 
     public double perimeter() {
-        return side1 + side2 + side3;
+        double perimeter = 0.0;
+        int n = vectors.size();
+        for (int i = 0; i < n; i++) {
+            perimeter += vectors.get(i).length();
+        }
+        return perimeter;
     }
 }
