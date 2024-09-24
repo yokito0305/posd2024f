@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.swing.text.AbstractDocument.Content;
 
@@ -68,6 +69,8 @@ public class ShapeTest {
 
     @Test
     public void testCircleNext() {
+        expectedEx.expect(NoSuchElementException.class);
+        expectedEx.expectMessage("Null iterator does not point to any element");
         Circle circle = new Circle(5.0);
         Iterator<Shape> iterator = circle.iterator();
         assertEquals(null, iterator.next());

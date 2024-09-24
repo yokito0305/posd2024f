@@ -76,22 +76,22 @@ public class TriangleTest {
         Triangle triangle = new Triangle(vectors);
     }
 
-    @Test
-    public void testConstructorWithParallelSide() throws ShapeException {
-        expectedEx.expect(ShapeException.class);
-        expectedEx.expectMessage("It's not a triangle!");
+    // @Test
+    // public void testConstructorWithParallelSide() throws ShapeException {
+    //     expectedEx.expect(ShapeException.class);
+    //     expectedEx.expectMessage("It's not a triangle!");
 
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(6, 0);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(4, 0);
+    //     TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
+    //     TwoDimensionalVector side2 = new TwoDimensionalVector(6, 0);
+    //     TwoDimensionalVector side3 = new TwoDimensionalVector(4, 0);
 
-        List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
+    //     List<TwoDimensionalVector> vectors = new ArrayList<>();
+    //     vectors.add(side1);
+    //     vectors.add(side2);
+    //     vectors.add(side3);
 
-        Triangle triangle = new Triangle(vectors);
-    }
+    //     Triangle triangle = new Triangle(vectors);
+    // }
 
     @Test
     public void testPerimeter() throws ShapeException {

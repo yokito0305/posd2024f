@@ -11,9 +11,6 @@ public class ConvexPolygon implements Shape {
      * @param vectors
      */
     public ConvexPolygon(List<TwoDimensionalVector> vectors) throws ShapeException {
-        if(vectors.size() < 3) {
-            throw new ShapeException("It's not a convex polygon!");
-        }
         if (!isConvex(vectors)) {
             throw new ShapeException("It's not a convex polygon!");
         }
@@ -24,7 +21,6 @@ public class ConvexPolygon implements Shape {
     /** Function to check if the polygon is
      * convex polygon or not */
     private boolean isConvex(List<TwoDimensionalVector> vectors) {
-        int tmpX = 0, tmpY = 0;
         int n = vectors.size();
         int curr = 0;
         int prev = 0;
@@ -44,14 +40,6 @@ public class ConvexPolygon implements Shape {
                     prev = curr;
                 }
             }
-
-            tmpX += vectors.get(i).x;
-            tmpY += vectors.get(i).y;
-        }
-
-        // If the sums of the x or y coordinates are both zero, then it is a closed polygon.
-        if (tmpX != 0 || tmpY != 0) {
-            return false;
         }
 
         return true;
