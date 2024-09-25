@@ -15,8 +15,12 @@ public class ConvexPolygon implements Shape {
         if(vectors.size() < 3) {
             throw new ShapeException("It's not a convex polygon!");
         }
+        if (!isSorted(vectors)) {
+            throw new ShapeException("It's not a convex polygon!");
+        }
         if (!isConvex(vectors)) {
             throw new ShapeException("It's not a convex polygon!");
+            
         }
 
         this.vectors = vectors;
@@ -24,7 +28,7 @@ public class ConvexPolygon implements Shape {
 
     /** Function to check if the polygon vectors is
      * sorted or not */
-    private boolean isConvex(List<TwoDimensionalVector> vectors) {
+    private boolean isSorted(List<TwoDimensionalVector> vectors) {
         int n = vectors.size();
         
         // find the largest x-coordinate in vectors and find centroid
@@ -78,6 +82,18 @@ public class ConvexPolygon implements Shape {
             angle = 360 - angle;
         }
         return angle;
+    }
+
+    private Boolean isConvex(List<TwoDimensionalVector> vectors) {
+        int n = vectors.size();
+        for (int i = 0; i < n; i++) {
+            TwoDimensionalVector v1 = vectors.get(i).subtract(vectors.get((i + 1) % n));
+            TwoDimensionalVector v2 = vectors.get((i + 2) % n).subtract(vectors.get((i + 1) % n));
+            if (v1.cross(v2) < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public double area() {

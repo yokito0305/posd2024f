@@ -106,6 +106,27 @@ public class ConvexPolygonTest {
     }
 
     @Test
+    public void testConstructorWithNotConvexPolygon() throws ShapeException {
+        expectEx.expect(ShapeException.class);
+        expectEx.expectMessage("It's not a convex polygon!");
+
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(3, 3);
+        TwoDimensionalVector vector4 = new TwoDimensionalVector(4, 5);
+        TwoDimensionalVector vector5 = new TwoDimensionalVector(1, 5);
+
+        List<TwoDimensionalVector> vectors = new ArrayList<>();
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        vectors.add(vector4);
+        vectors.add(vector5);
+
+        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
+    }
+
+    @Test
     public void testArea() throws ShapeException {
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
