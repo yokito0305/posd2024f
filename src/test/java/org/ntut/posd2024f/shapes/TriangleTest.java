@@ -17,15 +17,15 @@ public class TriangleTest {
 
     @Test
     public void testConstructor() throws ShapeException {
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(-3, 4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(0, -4);
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 5);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
-
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        
         Triangle triangle = new Triangle(vectors);
     }
 
@@ -34,10 +34,10 @@ public class TriangleTest {
         expectedEx.expect(ShapeException.class);
         expectedEx.expectMessage("It's not a triangle!");
 
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
+        TwoDimensionalVector vector = new TwoDimensionalVector(3, 0);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
+        vectors.add(vector);
 
         Triangle triangle = new Triangle(vectors);
     }
@@ -47,62 +47,45 @@ public class TriangleTest {
         expectedEx.expect(ShapeException.class);
         expectedEx.expectMessage("It's not a triangle!");
 
-        TwoDimensionalVector side1 = new TwoDimensionalVector(0, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(0, 0);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(0, 0);
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(0, 0);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(0, 0);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(0, 0);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
 
         Triangle triangle = new Triangle(vectors);
     }
 
     @Test
-    public void testConstructorWithInvalidSide() throws ShapeException {
+    public void testConstructorWithPallarelSide() throws ShapeException {
         expectedEx.expect(ShapeException.class);
         expectedEx.expectMessage("It's not a triangle!");
 
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(-3, 4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(0, -1);
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(7, 1);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
 
         Triangle triangle = new Triangle(vectors);
     }
 
-    // @Test
-    // public void testConstructorWithParallelSide() throws ShapeException {
-    //     expectedEx.expect(ShapeException.class);
-    //     expectedEx.expectMessage("It's not a triangle!");
-
-    //     TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-    //     TwoDimensionalVector side2 = new TwoDimensionalVector(6, 0);
-    //     TwoDimensionalVector side3 = new TwoDimensionalVector(4, 0);
-
-    //     List<TwoDimensionalVector> vectors = new ArrayList<>();
-    //     vectors.add(side1);
-    //     vectors.add(side2);
-    //     vectors.add(side3);
-
-    //     Triangle triangle = new Triangle(vectors);
-    // }
-
     @Test
     public void testPerimeter() throws ShapeException {
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(-3, 4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(0, -4);
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 5);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
 
         Triangle triangle = new Triangle(vectors);
         assertEquals(12.0, triangle.perimeter(), 0.01);
@@ -110,14 +93,14 @@ public class TriangleTest {
 
     @Test
     public void testArea() throws ShapeException {
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(-3, 4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(0, -4);
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 5);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
 
         Triangle triangle = new Triangle(vectors);
         assertEquals(6.0, triangle.area(), 0.01);

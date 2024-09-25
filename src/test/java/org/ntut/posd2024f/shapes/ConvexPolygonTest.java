@@ -16,42 +16,56 @@ public class ConvexPolygonTest {
 
     @Test
     public void testConstructor() throws ShapeException {
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(-3, 4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(0, -4);
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(6, 3);
+        TwoDimensionalVector vector4 = new TwoDimensionalVector(4, 5);
+        TwoDimensionalVector vector5 = new TwoDimensionalVector(1, 5);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        vectors.add(vector4);
+        vectors.add(vector5);
+        
+        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
 
     }
 
     @Test
     public void testConstructorWithClockwiseDirection() throws ShapeException {
-        TwoDimensionalVector side1 = new TwoDimensionalVector(0, 4);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(3, -4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(-3, 0);
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(1, 5);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(4, 5);
+        TwoDimensionalVector vector4 = new TwoDimensionalVector(6, 3);
+        TwoDimensionalVector vector5 = new TwoDimensionalVector(4, 1);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
-
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        vectors.add(vector4);
+        vectors.add(vector5);
+        
         ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
     }
 
     @Test
     public void testConstructorWithCounterclockwiseDirection() throws ShapeException {
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(-3, 4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(0, -4);
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(6, 3);
+        TwoDimensionalVector vector4 = new TwoDimensionalVector(4, 5);
+        TwoDimensionalVector vector5 = new TwoDimensionalVector(1, 5);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
-
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        vectors.add(vector4);
+        vectors.add(vector5);
+        
         ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
     }
 
@@ -75,79 +89,57 @@ public class ConvexPolygonTest {
         expectEx.expect(ShapeException.class);
         expectEx.expectMessage("It's not a convex polygon!");
 
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(0, -4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(3, 4);
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(4, 5);
+        TwoDimensionalVector vector4 = new TwoDimensionalVector(6, 3);
+        TwoDimensionalVector vector5 = new TwoDimensionalVector(1, 5);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side3);
-        vectors.add(side2);
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        vectors.add(vector4);
+        vectors.add(vector5);
 
         ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
     }
 
     @Test
     public void testArea() throws ShapeException {
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(-3, 4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(0, -4);
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(6, 3);
+        TwoDimensionalVector vector4 = new TwoDimensionalVector(4, 5);
+        TwoDimensionalVector vector5 = new TwoDimensionalVector(1, 5);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        vectors.add(vector4);
+        vectors.add(vector5);
 
         ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
-        assertEquals(12.0, convexPolygon.area(), 0.01);
-    }
-
-    @Test
-    public void testAreaWithRectangle() throws ShapeException {
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(0, 4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(-3, 0);
-        TwoDimensionalVector side4 = new TwoDimensionalVector(0, -4);
-
-        List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
-        vectors.add(side4);
-
-        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
-        assertEquals(12.0, convexPolygon.area(), 0.01);
+        assertEquals(16.0, convexPolygon.area(), 0.01);
     }
 
     @Test
     public void testPerimeter() throws ShapeException {
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(-3, 4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(0, -4);
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(6, 3);
+        TwoDimensionalVector vector4 = new TwoDimensionalVector(4, 5);
+        TwoDimensionalVector vector5 = new TwoDimensionalVector(1, 5);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        vectors.add(vector4);
+        vectors.add(vector5);
 
         ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
-        assertEquals(12.0, convexPolygon.perimeter(), 0.01);
-    }
-
-    @Test
-    public void testPerimeterWithRectangle() throws ShapeException {
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(0, 4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(-3, 0);
-        TwoDimensionalVector side4 = new TwoDimensionalVector(0, -4);
-
-        List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
-        vectors.add(side4);
-
-        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
-        assertEquals(14.0, convexPolygon.perimeter(), 0.01);
+        assertEquals(15.66, convexPolygon.perimeter(), 0.01);
     }
 }
