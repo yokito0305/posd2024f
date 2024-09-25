@@ -26,14 +26,14 @@ public class CompoundShapeTest {
 
     @BeforeClass
     public static void setUp() {
-        TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
-        TwoDimensionalVector side2 = new TwoDimensionalVector(-3, 4);
-        TwoDimensionalVector side3 = new TwoDimensionalVector(0, -4);
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 5);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(side1);
-        vectors.add(side2);
-        vectors.add(side3);
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
 
         triangle = new Triangle(vectors); // area = 6.0 perimeter = 12.0
         rectangle = new Rectangle(3, 4); // area = 12.0 perimeter = 14.0
