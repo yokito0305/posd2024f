@@ -28,6 +28,9 @@ public class ConvexPolygon implements Shape {
         int n = vectors.size();
         
         // find the largest x-coordinate in vectors and find centroid
+        Boolean isAllPallarel = true;
+        int mCur = 0;
+        int mNext = 1;
         int tmpX = 0;
         int tmpY = 0;
         int max = 0;
@@ -41,6 +44,20 @@ public class ConvexPolygon implements Shape {
             if (vectors.get(i).x > vectors.get(max).x) {
                 max = i;
             }
+            
+            int deltaY1 = vectors.get(i).y - vectors.get((i + 1) % n).y;
+            int deltaY2 = vectors.get((i + 1) % n).y - vectors.get((i + 2) % n).y;
+
+            mCur = (deltaY1 == 0)? 0 : (vectors.get(i).x - vectors.get((i + 1) % n).x) / deltaY1;
+            mNext = (deltaY2 == 0)? 0 : (vectors.get((i + 1) % n).x - vectors.get((i + 2) % n).x) / deltaY2;
+            if (mCur != mNext) {
+                isAllPallarel = false;
+            }
+        }
+
+        // if all vectors are parallel, it's not a convex polygon
+        if (isAllPallarel) {
+            return false;
         }
         
         TwoDimensionalVector centroid = new TwoDimensionalVector(tmpX / n, tmpY / n);

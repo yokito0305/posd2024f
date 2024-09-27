@@ -34,6 +34,78 @@ public class ConvexPolygonTest {
     }
 
     @Test
+    public void testConstructorWithTwoPallarelVector() throws ShapeException {
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(2, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector4 = new TwoDimensionalVector(6, 3);
+        TwoDimensionalVector vector5 = new TwoDimensionalVector(4, 5);
+        TwoDimensionalVector vector6 = new TwoDimensionalVector(1, 5);
+        TwoDimensionalVector vector7 = new TwoDimensionalVector(1, 4);
+
+
+        List<TwoDimensionalVector> vectors = new ArrayList<>();
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        vectors.add(vector4);
+        vectors.add(vector5);
+        vectors.add(vector6);
+        vectors.add(vector7);
+        
+        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
+
+    }
+
+    @Test
+    public void testConstructorWithPallarelVector() throws ShapeException {
+        expectEx.expect(ShapeException.class);
+        expectEx.expectMessage("It's not a convex polygon!");
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(0, 0);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(2, 2);
+
+        List<TwoDimensionalVector> vectors = new ArrayList<>();
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        
+        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
+    }
+
+    @Test
+    public void testConstructorWithPallarelY() throws ShapeException {
+        expectEx.expect(ShapeException.class);
+        expectEx.expectMessage("It's not a convex polygon!");
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(0, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(2, 1);
+
+        List<TwoDimensionalVector> vectors = new ArrayList<>();
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        
+        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
+    }
+
+    @Test
+    public void testConstructorWithPallarelX() throws ShapeException {
+        expectEx.expect(ShapeException.class);
+        expectEx.expectMessage("It's not a convex polygon!");
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 0);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 2);
+
+        List<TwoDimensionalVector> vectors = new ArrayList<>();
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        
+        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
+    }
+
+    @Test
     public void testConstructorWithClockwiseDirection() throws ShapeException {
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(1, 5);
