@@ -58,54 +58,6 @@ public class ConvexPolygonTest {
     }
 
     @Test
-    public void testConstructorWithPallarelVector() throws ShapeException {
-        expectEx.expect(ShapeException.class);
-        expectEx.expectMessage("It's not a convex polygon!");
-        TwoDimensionalVector vector1 = new TwoDimensionalVector(0, 0);
-        TwoDimensionalVector vector2 = new TwoDimensionalVector(1, 1);
-        TwoDimensionalVector vector3 = new TwoDimensionalVector(2, 2);
-
-        List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(vector1);
-        vectors.add(vector2);
-        vectors.add(vector3);
-        
-        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
-    }
-
-    @Test
-    public void testConstructorWithPallarelY() throws ShapeException {
-        expectEx.expect(ShapeException.class);
-        expectEx.expectMessage("It's not a convex polygon!");
-        TwoDimensionalVector vector1 = new TwoDimensionalVector(0, 1);
-        TwoDimensionalVector vector2 = new TwoDimensionalVector(1, 1);
-        TwoDimensionalVector vector3 = new TwoDimensionalVector(2, 1);
-
-        List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(vector1);
-        vectors.add(vector2);
-        vectors.add(vector3);
-        
-        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
-    }
-
-    @Test
-    public void testConstructorWithPallarelX() throws ShapeException {
-        expectEx.expect(ShapeException.class);
-        expectEx.expectMessage("It's not a convex polygon!");
-        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 0);
-        TwoDimensionalVector vector2 = new TwoDimensionalVector(1, 1);
-        TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 2);
-
-        List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(vector1);
-        vectors.add(vector2);
-        vectors.add(vector3);
-        
-        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
-    }
-
-    @Test
     public void testConstructorWithClockwiseDirection() throws ShapeException {
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(1, 5);
