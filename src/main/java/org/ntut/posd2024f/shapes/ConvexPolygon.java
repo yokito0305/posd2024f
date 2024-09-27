@@ -74,9 +74,11 @@ public class ConvexPolygon implements Shape {
             TwoDimensionalVector next = vectors.get((max + 1) % n).subtract(centroid);
             if (angle(R, current) > angle(R, next)) {
                 isCounterclockwise = false;
+                System.out.println("isCounterclockwise false");
             }
             if (angle(R, current) < angle(R, next)) {
                 isClockwise = false;
+                System.out.println("isClockwise false");
             }
             if(!isClockwise && !isCounterclockwise) {
                 return false;
@@ -102,6 +104,10 @@ public class ConvexPolygon implements Shape {
         for (int i = 0; i < n; i++) {
             TwoDimensionalVector v1 = vectors.get(i).subtract(vectors.get((i + 1) % n));
             TwoDimensionalVector v2 = vectors.get((i + 2) % n).subtract(vectors.get((i + 1) % n));
+            System.out.println("i: " + i);
+            System.out.println("v1: " + v1.x + " " + v1.y);
+            System.out.println("v2: " + v2.x + " " + v2.y);
+            System.out.println("cross: " + v1.cross(v2));
             if(isClockwise) {
                 if (v1.cross(v2) < 0) {
                     return false;
