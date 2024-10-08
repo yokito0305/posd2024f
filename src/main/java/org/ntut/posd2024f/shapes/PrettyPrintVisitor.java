@@ -86,9 +86,9 @@ public class PrettyPrintVisitor implements Visitor<String>{
                 _result += "\033[0m";
                 break;
             default:
+                coloredShape.getShape().accept(this);
                 break;
         }
-
     }
 
     @Override
