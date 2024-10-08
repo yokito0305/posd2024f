@@ -133,7 +133,6 @@ public class PrettyPrintVisitorTest {
         CompoundShape compoundShape = new CompoundShape();
         CompoundShape compoundShape1 = new CompoundShape();
 
-
         Circle circle = new Circle(1.0);
         Rectangle rectangle = new Rectangle(1.0, 2.0);
         compoundShape1.add(circle);
@@ -173,5 +172,35 @@ public class PrettyPrintVisitorTest {
         ColoredShape coloredShape = new ColoredShape(circle, "Blue");
         coloredShape.accept(prettyPrintVisitor);
         assertEquals("\033[0;34mCircle 1.0\033[0m", prettyPrintVisitor.getResult());
+        System.out.println(prettyPrintVisitor.getResult());
+    }
+
+    @Test
+    public void PrettyPrintVisitorWithColoredShapeWithCompoundShapeAndTextedShape() {
+        PrettyPrintVisitor prettyPrintVisitor = new PrettyPrintVisitor();
+        CompoundShape compoundShape1 = new CompoundShape();
+        Circle circle = new Circle(1.0);
+        Rectangle rectangle = new Rectangle(1.0, 2.0);
+        compoundShape1.add(circle);
+        compoundShape1.add(rectangle);
+        TextedShape textedShape = new TextedShape(compoundShape1, "This is a blue compound shape");
+        ColoredShape coloredShape = new ColoredShape(textedShape, "Blue");
+
+        CompoundShape compoundShape2 = new CompoundShape();
+        compoundShape2.add(circle);
+        compoundShape2.add(rectangle);
+        TextedShape textedShape1 = new TextedShape(compoundShape2, "This is a red compound shape");
+        ColoredShape coloredShape1 = new ColoredShape(textedShape1, "Red");
+
+        CompoundShape compoundShape3 = new CompoundShape();
+        compoundShape3.add(coloredShape);
+        compoundShape3.add(coloredShape1);
+        TextedShape textedShape2 = new TextedShape(compoundShape3, "This is a green compound shape");
+        ColoredShape coloredShape2 = new ColoredShape(textedShape2, "Green");
+
+        coloredShape2.accept(prettyPrintVisitor);
+        assertEquals("\033[0;32mCompoundShape {\n  \033[0;34mCompoundShape {\n    Circle 1.0\n    Rectangle 1.0 2.0\n  }, text: This is a blue compound shape\033[0m\n" +  
+                        "  \033[0;31mCompoundShape {\n    Circle 1.0\n    Rectangle 1.0 2.0\n  }, text: This is a red compound shape\033[0m\n}, text: This is a green compound shape\033[0m"
+                        , prettyPrintVisitor.getResult());
     }
 }
