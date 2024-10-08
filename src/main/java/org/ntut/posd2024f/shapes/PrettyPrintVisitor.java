@@ -18,20 +18,18 @@ public class PrettyPrintVisitor implements Visitor<String>{
 
     @Override
     public void visitTriangle(Triangle triangle) {
-        _result += "Triangle ";
+        _result += "Triangle";
         for (TwoDimensionalVector vector : triangle.getVectors()) {
-            _result += vector.toString() + " ";
+            _result += " " + vector.toString();
         }
-        _result = _result.trim();
     }
 
     @Override
     public void visitConvexPolygon(ConvexPolygon convexPolygon) {
-        _result += "ConvexPolygon ";
+        _result += "ConvexPolygon";
         for (TwoDimensionalVector vector : convexPolygon.getVectors()) {
-            _result += vector.toString() + " ";
+            _result +=  " " +vector.toString();
         }
-        _result = _result.trim();
     }
 
     @Override
