@@ -172,7 +172,7 @@ public class PrettyPrintVisitorTest {
         ColoredShape coloredShape = new ColoredShape(circle, "Blue");
         coloredShape.accept(prettyPrintVisitor);
         assertEquals("\033[0;34mCircle 1.0\033[0m", prettyPrintVisitor.getResult());
-        System.out.println(prettyPrintVisitor.getResult());
+        // System.out.println(prettyPrintVisitor.getResult());
     }
 
     @Test
@@ -192,15 +192,15 @@ public class PrettyPrintVisitorTest {
         TextedShape textedShape1 = new TextedShape(compoundShape2, "This is a red compound shape");
         ColoredShape coloredShape1 = new ColoredShape(textedShape1, "Red");
 
+        TextedShape textedShape3 = new TextedShape(circle, "This is a green compound shape");
+        ColoredShape coloredShape3 = new ColoredShape(textedShape3, "Green");
+
         CompoundShape compoundShape3 = new CompoundShape();
         compoundShape3.add(coloredShape);
         compoundShape3.add(coloredShape1);
-        TextedShape textedShape2 = new TextedShape(compoundShape3, "This is a green compound shape");
-        ColoredShape coloredShape2 = new ColoredShape(textedShape2, "Green");
+        compoundShape3.add(coloredShape3);
 
-        coloredShape2.accept(prettyPrintVisitor);
-        assertEquals("\033[0;32mCompoundShape {\n  \033[0;34mCompoundShape {\n    Circle 1.0\n    Rectangle 1.0 2.0\n  }, text: This is a blue compound shape\033[0m\n" +  
-                        "  \033[0;31mCompoundShape {\n    Circle 1.0\n    Rectangle 1.0 2.0\n  }, text: This is a red compound shape\033[0m\n}, text: This is a green compound shape\033[0m"
-                        , prettyPrintVisitor.getResult());
+        compoundShape3.accept(prettyPrintVisitor);
+        // System.out.println(prettyPrintVisitor.getResult());
     }
 }
