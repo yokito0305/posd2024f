@@ -156,4 +156,22 @@ public class PrettyPrintVisitorTest {
         coloredShape.accept(prettyPrintVisitor);
         assertEquals("\\033[0;31mCircle 1.0\\033[0m", prettyPrintVisitor.getResult());
     }
+
+    @Test
+    public void PrettyPrintVisitorWithColoredShapeWithGreen() {
+        PrettyPrintVisitor prettyPrintVisitor = new PrettyPrintVisitor();
+        Circle circle = new Circle(1.0);
+        ColoredShape coloredShape = new ColoredShape(circle, "Green");
+        coloredShape.accept(prettyPrintVisitor);
+        assertEquals("\\033[0;32mCircle 1.0\\033[0m", prettyPrintVisitor.getResult());
+    }
+
+    @Test
+    public void PrettyPrintVisitorWithColoredShapeWithBlue() {
+        PrettyPrintVisitor prettyPrintVisitor = new PrettyPrintVisitor();
+        Circle circle = new Circle(1.0);
+        ColoredShape coloredShape = new ColoredShape(circle, "Blue");
+        coloredShape.accept(prettyPrintVisitor);
+        assertEquals("\\033[0;34mCircle 1.0\\033[0m", prettyPrintVisitor.getResult());
+    }
 }

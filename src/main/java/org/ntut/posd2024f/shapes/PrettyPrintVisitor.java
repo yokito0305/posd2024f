@@ -71,21 +71,26 @@ public class PrettyPrintVisitor implements Visitor<String>{
 
     @Override
     public void visitColoredShape(ColoredShape coloredShape) {
-        switch (coloredShape.getColor()) {
-            case "Red":
+        switch (coloredShape.getColor().toUpperCase()) {
+            case "RED":
                 _result += "\\033[0;31m";
+                coloredShape.getShape().accept(this);
+                _result += "\\033[0m";
                 break;
-            case "Green":
+            case "GREEN":
                 _result += "\\033[0;32m";
+                coloredShape.getShape().accept(this);
+                _result += "\\033[0m";
                 break;
-            case "Blue":
+            case "BLUE":
                 _result += "\\033[0;34m";
+                coloredShape.getShape().accept(this);
+                _result += "\\033[0m";
                 break;
             default:
                 break;
         }
-        coloredShape.getShape().accept(this);
-        _result += "\\033[0m";
+
     }
 
     @Override
