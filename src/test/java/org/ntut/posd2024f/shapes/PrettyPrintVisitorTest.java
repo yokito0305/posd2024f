@@ -173,6 +173,5 @@ public class PrettyPrintVisitorTest {
         ColoredShape coloredShape = new ColoredShape(circle, "Blue");
         coloredShape.accept(prettyPrintVisitor);
         assertEquals("\033[0;34mCircle 1.0\033[0m", prettyPrintVisitor.getResult());
-        System.out.println(prettyPrintVisitor.getResult());
     }
 }

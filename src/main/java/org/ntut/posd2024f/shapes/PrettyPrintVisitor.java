@@ -8,17 +8,17 @@ public class PrettyPrintVisitor implements Visitor<String>{
 
     @Override
     public void visitCircle(Circle circle) {
-        _result += getIndent() + "Circle " + circle.getRadius();
+        _result += "Circle " + circle.getRadius();
     }
 
     @Override
     public void visitRectangle(Rectangle rectangle) {
-        _result += getIndent() + "Rectangle " + rectangle.getLength() + " " + rectangle.getWidth();
+        _result += "Rectangle " + rectangle.getLength() + " " + rectangle.getWidth();
     }
 
     @Override
     public void visitTriangle(Triangle triangle) {
-        _result += getIndent() + "Triangle ";
+        _result += "Triangle ";
         for (TwoDimensionalVector vector : triangle.getVectors()) {
             _result += vector.toString() + " ";
         }
@@ -27,7 +27,7 @@ public class PrettyPrintVisitor implements Visitor<String>{
 
     @Override
     public void visitConvexPolygon(ConvexPolygon convexPolygon) {
-        _result += getIndent() + "ConvexPolygon ";
+        _result += "ConvexPolygon ";
         for (TwoDimensionalVector vector : convexPolygon.getVectors()) {
             _result += vector.toString() + " ";
         }
@@ -38,14 +38,14 @@ public class PrettyPrintVisitor implements Visitor<String>{
     public void visitCompoundShape(CompoundShape compoundShape) {
         Boolean isEmpty = compoundShape.iterator().hasNext();
         if (!isEmpty) {
-            _result += getIndent() + "CompoundShape {}";
+            _result += "CompoundShape {}";
         } else {
             /*The shapes in the compound shape should have an indent of 2 spaces. If the shape is a compound shape, the indent should be increased by 2 spaces. */
-            _result += getIndent() + "CompoundShape {";
+            _result += "CompoundShape {";
             indentLevel ++;
             Iterator<Shape> iterator = compoundShape.iterator();
             while (iterator.hasNext()) {
-                _result += "\n";
+                _result += "\n" + getIndent();
                 Shape shape = iterator.next();
                 shape.accept(this);
 
