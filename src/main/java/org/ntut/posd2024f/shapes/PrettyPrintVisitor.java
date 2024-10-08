@@ -22,6 +22,7 @@ public class PrettyPrintVisitor implements Visitor<String>{
         for (TwoDimensionalVector vector : triangle.getVectors()) {
             _result += vector.toString() + " ";
         }
+        _result = _result.trim();
     }
 
     @Override
@@ -30,6 +31,7 @@ public class PrettyPrintVisitor implements Visitor<String>{
         for (TwoDimensionalVector vector : convexPolygon.getVectors()) {
             _result += vector.toString() + " ";
         }
+        _result = _result.trim();
     }
 
     @Override

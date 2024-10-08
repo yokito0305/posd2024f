@@ -12,12 +12,6 @@ public class CircleTest {
     public static void setUp() {
         radius = 5;
     }
-
-    @Test
-    public void testConstructor() {
-        Circle circle = new Circle(5.0);
-    }
-
     @Test
     public void testConstructorWithNegativeRadius() {
         ShapeException exception = assertThrows(ShapeException.class, () -> {
