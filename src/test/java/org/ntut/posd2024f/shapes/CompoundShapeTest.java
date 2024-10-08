@@ -1,12 +1,12 @@
 package org.ntut.posd2024f.shapes;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class CompoundShapeTest {
     private static Circle circle;
@@ -24,7 +24,7 @@ public class CompoundShapeTest {
         compoundShape.add(circle);
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);

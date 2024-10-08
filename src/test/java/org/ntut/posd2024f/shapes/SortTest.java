@@ -1,12 +1,12 @@
 package org.ntut.posd2024f.shapes;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SortTest {
     @Test
-    public void testByAreaAscendingCompare() throws Exception {
+    public void testByAreaAscendingCompare() {
         Circle circle = new Circle(5.0); // area = 78.54
         Circle circle2 = new Circle(10.0); // area = 314.16
 
@@ -16,7 +16,7 @@ public class SortTest {
     }
 
     @Test
-    public void testByAreaDescendingCompare() throws Exception {
+    public void testByAreaDescendingCompare() {
         Circle circle = new Circle(5.0); // area = 78.54
         Circle circle2 = new Circle(10.0); // area = 314.16
 
@@ -26,7 +26,7 @@ public class SortTest {
     }
 
     @Test
-    public void testByPerimeterAscendingCompare() throws Exception {
+    public void testByPerimeterAscendingCompare() {
         Circle circle = new Circle(5.0); // perimeter = 31.42
         Circle circle2 = new Circle(10.0); // perimeter = 62.83
 
@@ -36,7 +36,7 @@ public class SortTest {
     }
 
     @Test
-    public void testByPerimeterDescendingCompare() throws Exception {
+    public void testByPerimeterDescendingCompare() {
         Circle circle = new Circle(5.0); // perimeter = 31.42
         Circle circle2 = new Circle(10.0); // perimeter = 62.83
 

@@ -1,6 +1,6 @@
 package org.ntut.posd2024f.shapes;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,10 +9,8 @@ import java.util.NoSuchElementException;
 
 import javax.swing.text.AbstractDocument.Content;
 
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 @SuppressWarnings("unused")
 public class ShapeTest {
@@ -21,11 +19,8 @@ public class ShapeTest {
     private static Rectangle rectangle;
     private static ArrayList<Shape> shapes;
 
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
-
-    @BeforeClass
-    public static void setUp() throws Exception {
+    @BeforeAll
+    public static void setUp() {
         // 初始化全域變數
         TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
         TwoDimensionalVector side2 = new TwoDimensionalVector(-3, 4);
@@ -47,14 +42,14 @@ public class ShapeTest {
     }
 
     @Test
-    public void testByArea() throws Exception {
+    public void testByArea() {
         assertEquals(circle.area(), shapes.get(0).area(), 0.01);
         assertEquals(triangle.area(), shapes.get(1).area(), 0.01);
         assertEquals(rectangle.area(), shapes.get(2).area(), 0.01);
     }
 
     @Test
-    public void testByPerimeter() throws Exception {
+    public void testByPerimeter() {
         assertEquals(circle.perimeter(), shapes.get(0).perimeter(), 0.01);
         assertEquals(triangle.perimeter(), shapes.get(1).perimeter(), 0.01);
         assertEquals(rectangle.perimeter(), shapes.get(2).perimeter(), 0.01);

@@ -17,4 +17,13 @@ public class Circle implements Shape {
     public double perimeter() {
         return 2 * Math.PI * radius;
     }
+
+    @Override
+    public <T> void accept(Visitor<T> visitor) {
+        visitor.visitCircle(this);
+    }
+
+    public double getRadius() {
+        return radius;
+    }
 }

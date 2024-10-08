@@ -1,61 +1,59 @@
 package org.ntut.posd2024f.shapes;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("unused")
 public class RectangleTest {
     private static double length = 5;
     private static double width = 10;
     
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
-
     @Test
-    public void testConstructor() throws ShapeException {
+    public void testConstructor() {
         Rectangle rectangle = new Rectangle(5.0, 10.0);
     }
 
     @Test
-    public void testConstructorWithNegativeWidth() throws ShapeException {
-        expectedEx.expect(ShapeException.class);
-        expectedEx.expectMessage("It's not a rectangle!");
-        Rectangle rectangle = new Rectangle(-5.0, 10.0);
+    public void testConstructorWithNegativeWidth() {
+        ShapeException exception = assertThrows(ShapeException.class, () -> {
+            new Rectangle(-5.0, 10.0);
+        });
+        assertEquals("It's not a rectangle!", exception.getMessage());
     }
 
     @Test
-    public void testConstructorWithNegativeHeight() throws ShapeException {
-        expectedEx.expect(ShapeException.class);
-        expectedEx.expectMessage("It's not a rectangle!");
-        Rectangle rectangle = new Rectangle(5.0, -10.0);
+    public void testConstructorWithNegativeHeight() {
+        ShapeException exception = assertThrows(ShapeException.class, () -> {
+            new Rectangle(5.0, -10.0);
+        });
+        assertEquals("It's not a rectangle!", exception.getMessage());
     }
 
     @Test
-    public void testConstructorWithZeroWidth() throws ShapeException {
-        expectedEx.expect(ShapeException.class);
-        expectedEx.expectMessage("It's not a rectangle!");
-        Rectangle rectangle = new Rectangle(0, 10.0);
+    public void testConstructorWithZeroWidth() {
+        ShapeException exception = assertThrows(ShapeException.class, () -> {
+            new Rectangle(0, 10.0);
+        });
+        assertEquals("It's not a rectangle!", exception.getMessage());
     }
 
     @Test
-    public void testConstructorWithZeroHeight() throws ShapeException {
-        expectedEx.expect(ShapeException.class);
-        expectedEx.expectMessage("It's not a rectangle!");
-        Rectangle rectangle = new Rectangle(5.0, 0);
+    public void testConstructorWithZeroHeight() {
+        ShapeException exception = assertThrows(ShapeException.class, () -> {
+            new Rectangle(5.0, 0);
+        });
+        assertEquals("It's not a rectangle!", exception.getMessage());
     }
 
     @Test
-    public void testArea() throws ShapeException {
+    public void testArea() {
         Rectangle rectangle = new Rectangle(length, width);
         assertEquals(length * width, rectangle.area(), 0.01);
     }
 
     @Test
-    public void testPerimeter() throws ShapeException {
+    public void testPerimeter() {
         Rectangle rectangle = new Rectangle(length, width);
         assertEquals(2 * (length + width), rectangle.perimeter(), 0.01);
     }

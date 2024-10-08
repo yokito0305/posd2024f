@@ -1,22 +1,16 @@
 package org.ntut.posd2024f.shapes;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("unused")
 public class TriangleTest {
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
-
     @Test
-    public void testConstructor() throws ShapeException {
+    public void testConstructor() {
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 5);
@@ -30,23 +24,20 @@ public class TriangleTest {
     }
 
     @Test
-    public void testConstructorWithOneSide() throws ShapeException {
-        expectedEx.expect(ShapeException.class);
-        expectedEx.expectMessage("It's not a triangle!");
-
+    public void testConstructorWithOneSide() {
         TwoDimensionalVector vector = new TwoDimensionalVector(3, 0);
 
         List<TwoDimensionalVector> vectors = new ArrayList<>();
         vectors.add(vector);
 
-        Triangle triangle = new Triangle(vectors);
+        ShapeException exception = assertThrows(ShapeException.class, () -> {
+            Triangle triangle = new Triangle(vectors);
+        });
+        assertEquals("It's not a triangle!", exception.getMessage());
     }
 
     @Test
-    public void testConstructorWithZeroSide() throws ShapeException {
-        expectedEx.expect(ShapeException.class);
-        expectedEx.expectMessage("It's not a triangle!");
-
+    public void testConstructorWithZeroSide(){
         TwoDimensionalVector vector1 = new TwoDimensionalVector(0, 0);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(0, 0);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(0, 0);
@@ -56,14 +47,14 @@ public class TriangleTest {
         vectors.add(vector2);
         vectors.add(vector3);
 
-        Triangle triangle = new Triangle(vectors);
+        ShapeException exception = assertThrows(ShapeException.class, () -> {
+            Triangle triangle = new Triangle(vectors);
+        });
+        assertEquals("It's not a triangle!", exception.getMessage());
     }
 
     @Test
-    public void testConstructorWithPallarelSide() throws ShapeException {
-        expectedEx.expect(ShapeException.class);
-        expectedEx.expectMessage("It's not a triangle!");
-
+    public void testConstructorWithPallarelSide() {
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(7, 1);
@@ -73,11 +64,14 @@ public class TriangleTest {
         vectors.add(vector2);
         vectors.add(vector3);
 
-        Triangle triangle = new Triangle(vectors);
+        ShapeException exception = assertThrows(ShapeException.class, () -> {
+            Triangle triangle = new Triangle(vectors);
+        });
+        assertEquals("It's not a triangle!", exception.getMessage());
     }
 
     @Test
-    public void testPerimeter() throws ShapeException {
+    public void testPerimeter() {
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 5);
@@ -92,7 +86,7 @@ public class TriangleTest {
     }
 
     @Test
-    public void testArea() throws ShapeException {
+    public void testArea() {
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 5);

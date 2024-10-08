@@ -114,7 +114,7 @@ public class ConvexPolygon implements Shape {
             compoundShape.add(new Triangle(tmpVectors));
         }
 
-        return compoundShape.area();
+        return Math.round(compoundShape.area() * 1e6) / 1e6;
     }
 
     public double perimeter() {
@@ -124,5 +124,14 @@ public class ConvexPolygon implements Shape {
         }
 
         return perimeter;
+    }
+
+    @Override
+    public <T> void accept(Visitor<T> visitor) {
+        visitor.visitConvexPolygon(this);
+    }
+
+    public List<TwoDimensionalVector> getVectors() {
+        return vectors;
     }
 }

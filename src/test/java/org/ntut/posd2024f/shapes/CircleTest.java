@@ -1,47 +1,47 @@
 package org.ntut.posd2024f.shapes;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("unused")
 public class CircleTest {
     private static double radius = 5;
 
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
+    @BeforeAll
+    public static void setUp() {
+        radius = 5;
+    }
 
     @Test
-    public void testConstructor() throws ShapeException {
-        // e.g. Circle c = new Circle(...)
+    public void testConstructor() {
         Circle circle = new Circle(5.0);
     }
 
     @Test
-    public void testConstructorWithNegativeRadius() throws ShapeException {
-        expectedEx.expect(ShapeException.class);
-        expectedEx.expectMessage("It's not a circle!");
-        Circle circle = new Circle(-5.0);
+    public void testConstructorWithNegativeRadius() {
+        ShapeException exception = assertThrows(ShapeException.class, () -> {
+            new Circle(-5.0);
+        });
+        assertEquals("It's not a circle!", exception.getMessage());
     }
 
     @Test
-    public void testConstructorWithZeroRadius() throws ShapeException {
-        expectedEx.expect(ShapeException.class);
-        expectedEx.expectMessage("It's not a circle!");
-        Circle circle = new Circle(0);
+    public void testConstructorWithZeroRadius() {
+        ShapeException exception = assertThrows(ShapeException.class, () -> {
+            new Circle(0);
+        });
+        assertEquals("It's not a circle!", exception.getMessage());
     }
 
     @Test
-    public void testArea() throws ShapeException {
+    public void testArea() {
         Circle circle = new Circle(radius);
         assertEquals(Math.PI * radius * radius, circle.area(), 0.01);
     }
 
     @Test
-    public void testPerimeter() throws ShapeException {
+    public void testPerimeter() {
         Circle circle = new Circle(radius);
         assertEquals(Math.PI * 2 * radius, circle.perimeter(), 0.01);
     }

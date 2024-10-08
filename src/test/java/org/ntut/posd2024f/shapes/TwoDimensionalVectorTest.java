@@ -1,8 +1,8 @@
 package org.ntut.posd2024f.shapes;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TwoDimensionalVectorTest {
     @Test
@@ -32,5 +32,11 @@ public class TwoDimensionalVectorTest {
         TwoDimensionalVector v3 = v1.subtract(v2);
         assertEquals(-2, v3.x);
         assertEquals(-2, v3.y);
+    }
+
+    @Test
+    public void testToString() {
+        TwoDimensionalVector v = new TwoDimensionalVector(3, 4);
+        assertEquals("[3,4]", v.toString());
     }
 }

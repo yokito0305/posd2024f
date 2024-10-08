@@ -19,4 +19,17 @@ public class Rectangle implements Shape {
     public double perimeter() {
         return 2 * (length + width);
     }
+
+    @Override
+    public <T> void accept(Visitor<T> visitor) {
+        visitor.visitRectangle(this);
+    }
+
+    public double getLength() {
+        return length;
+    }
+
+    public double getWidth() {
+        return width;
+    }
 }

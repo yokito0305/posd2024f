@@ -1,21 +1,16 @@
 package org.ntut.posd2024f.shapes;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("unused")
 public class ConvexPolygonTest {
-    @Rule
-    public ExpectedException expectEx = ExpectedException.none();
-
     @Test
-    public void testConstructor() throws ShapeException {
+    public void testConstructor(){
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(6, 3);
@@ -34,7 +29,7 @@ public class ConvexPolygonTest {
     }
 
     @Test
-    public void testConstructorWithTwoPallarelVector() throws ShapeException {
+    public void testConstructorWithTwoPallarelVector(){
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(2, 1);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(4, 1);
@@ -58,7 +53,7 @@ public class ConvexPolygonTest {
     }
 
     @Test
-    public void testConstructorWithClockwiseDirection() throws ShapeException {
+    public void testConstructorWithClockwiseDirection(){
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(1, 5);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(4, 5);
@@ -76,7 +71,7 @@ public class ConvexPolygonTest {
     }
 
     @Test
-    public void testConstructorWithCounterclockwiseDirection() throws ShapeException {
+    public void testConstructorWithCounterclockwiseDirection(){
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(6, 3);
@@ -94,10 +89,7 @@ public class ConvexPolygonTest {
     }
 
     @Test
-    public void testConstructorWithTwoVectors() throws ShapeException {
-        expectEx.expect(ShapeException.class);
-        expectEx.expectMessage("It's not a convex polygon!");
-
+    public void testConstructorWithTwoVectors(){
         TwoDimensionalVector side1 = new TwoDimensionalVector(3, 0);
         TwoDimensionalVector side2 = new TwoDimensionalVector(-3, 4);
 
@@ -105,14 +97,15 @@ public class ConvexPolygonTest {
         vectors.add(side1);
         vectors.add(side2);
 
-        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
+        ShapeException exception = assertThrows(ShapeException.class, () -> {
+            ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
+        });
+
+        assertEquals("It's not a convex polygon!", exception.getMessage());
     }
 
     @Test
-    public void testConstructorWithUnsortedVectors() throws ShapeException {
-        expectEx.expect(ShapeException.class);
-        expectEx.expectMessage("It's not a convex polygon!");
-
+    public void testConstructorWithUnsortedVectors(){
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(4, 5);
@@ -126,14 +119,15 @@ public class ConvexPolygonTest {
         vectors.add(vector4);
         vectors.add(vector5);
 
-        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
+        ShapeException exception = assertThrows(ShapeException.class, () -> {
+            ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
+        });
+
+        assertEquals("It's not a convex polygon!", exception.getMessage());
     }
 
     @Test
-    public void testConstructorWithNotConvexPolygon() throws ShapeException {
-        expectEx.expect(ShapeException.class);
-        expectEx.expectMessage("It's not a convex polygon!");
-
+    public void testConstructorWithNotConvexPolygon(){
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(3, 3);
@@ -147,11 +141,15 @@ public class ConvexPolygonTest {
         vectors.add(vector4);
         vectors.add(vector5);
 
-        ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
+        ShapeException exception = assertThrows(ShapeException.class, () -> {
+            ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
+        });
+
+        assertEquals("It's not a convex polygon!", exception.getMessage());
     }
 
     @Test
-    public void testArea() throws ShapeException {
+    public void testArea(){
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(6, 3);
@@ -170,7 +168,7 @@ public class ConvexPolygonTest {
     }
 
     @Test
-    public void testPerimeter() throws ShapeException {
+    public void testPerimeter(){
         TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
         TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
         TwoDimensionalVector vector3 = new TwoDimensionalVector(6, 3);
@@ -186,5 +184,24 @@ public class ConvexPolygonTest {
 
         ConvexPolygon convexPolygon = new ConvexPolygon(vectors);
         assertEquals(15.66, convexPolygon.perimeter(), 0.01);
+    }
+
+    @Test
+    public void testConvexWithRectangle(){
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(3, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(3, 6);
+        TwoDimensionalVector vector4 = new TwoDimensionalVector(1, 6);
+
+        List<TwoDimensionalVector> vectors = new ArrayList<>();
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+        vectors.add(vector4);
+
+        ConvexPolygon convexPolygon = new ConvexPolygon(vectors); // area = 10, perimeter = 14
+
+        assertEquals(10, convexPolygon.area(), 0.01);
+        assertEquals(14, convexPolygon.perimeter(), 0.01);
     }
 }
