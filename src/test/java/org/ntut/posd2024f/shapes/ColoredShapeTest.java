@@ -74,6 +74,24 @@ public class ColoredShapeTest {
         assertEquals(16.2832, coloredShape.perimeter(), 0.0001);
     }
 
+    @Test
+    public void testColoredShapeWithCompoundShapeOfIterators() {
+        Circle circle = new Circle(1.0); // radius = 1.0 -> area = 3.1416, perimeter = 6.2832
+        Rectangle rectangle = new Rectangle(2.0, 3.0); // width = 2.0, height = 3.0 -> area = 6.0, perimeter = 10.0
+        CompoundShape compoundShape = new CompoundShape();
+        compoundShape.add(circle);
+        compoundShape.add(rectangle);
+
+        ColoredShape coloredShape = new ColoredShape(compoundShape, "Yellow");
+        Iterator<Shape> iterator = coloredShape.iterator();
+        Shape ItCircle = iterator.next();
+        Shape ItRectangle = iterator.next();
+        assertEquals(circle.getRadius(), ((Circle)ItCircle).getRadius());
+        assertEquals(rectangle.getLength(), ((Rectangle)ItRectangle).getLength());
+        assertEquals(rectangle.getWidth(), ((Rectangle)ItRectangle).getWidth());
+        assertFalse(iterator.hasNext());
+    }
+
     // test ColoredShape can decorate a TextedShape
     @Test
     public void testColoredShapeWithTextedShape() {

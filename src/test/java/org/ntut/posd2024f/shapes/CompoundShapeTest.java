@@ -2,7 +2,6 @@ package org.ntut.posd2024f.shapes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

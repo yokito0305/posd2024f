@@ -201,6 +201,7 @@ public class PrettyPrintVisitorTest {
         compoundShape3.add(coloredShape3);
 
         compoundShape3.accept(prettyPrintVisitor);
+        assertEquals("CompoundShape {\n  \033[0;34mCompoundShape {\n    Circle 1.0\n    Rectangle 1.0 2.0\n  }, text: This is a blue compound shape\033[0m\n  \033[0;31mCompoundShape {\n    Circle 1.0\n    Rectangle 1.0 2.0\n  }, text: This is a red compound shape\033[0m\n  \033[0;32mCircle 1.0, text: This is a green compound shape\033[0m\n}", prettyPrintVisitor.getResult());
         // System.out.println(prettyPrintVisitor.getResult());
     }
 }

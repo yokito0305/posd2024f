@@ -3,6 +3,7 @@ package org.ntut.posd2024f.shapes;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -66,6 +67,24 @@ public class TextedShapeTest {
 
         assertEquals(9.1416, textedShape.area(), 0.0001);
         assertEquals(16.2832, textedShape.perimeter(), 0.0001);
+    }
+
+    @Test
+    public void testTextedShapeWithCompoundShapeOfIterators() {
+        Circle circle = new Circle(1.0); // radius = 1.0 -> area = 3.1416, perimeter = 6.2832
+        Rectangle rectangle = new Rectangle(2.0, 3.0); // width = 2.0, height = 3.0 -> area = 6.0, perimeter = 10.0
+        CompoundShape compoundShape = new CompoundShape();
+        compoundShape.add(circle);
+        compoundShape.add(rectangle);
+
+        TextedShape textedShape = new TextedShape(compoundShape, "CompoundShape");
+        Iterator<Shape> iterator = textedShape.iterator();
+        int count = 0;
+        while (iterator.hasNext()) {
+            iterator.next();
+            count++;
+        }
+        assertEquals(2, count);
     }
 
     @Test

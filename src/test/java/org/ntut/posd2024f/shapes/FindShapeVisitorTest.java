@@ -120,8 +120,25 @@ public class FindShapeVisitorTest {
     @Test
     public void testFindShapeVisitorWithCompoundShape() {
         FindShapeVisitor findShapeVisitor = new FindShapeVisitor(shape -> shape.area() > 8);
-        Circle circle = new Circle(2.0); // area = 12.5664
-        Rectangle rectangle = new Rectangle(2.0, 3.0); // area = 6
+        Circle circle = new Circle(2.0); // area = 12.5664, perimeter = 12.5664
+        Rectangle rectangle = new Rectangle(2.0, 3.0); // area = 6, perimeter = 10
+
+        CompoundShape compoundShape = new CompoundShape();
+        compoundShape.add(circle);
+        compoundShape.add(rectangle);
+
+        compoundShape.accept(findShapeVisitor);
+        List<Shape> result = findShapeVisitor.getResult();
+        assertEquals(2, result.size());
+        assertEquals(compoundShape, result.get(0));
+        assertEquals(circle, result.get(1));
+    }
+
+    @Test
+    public void testFindShapeVisitorWithCompoundShape2() {
+        FindShapeVisitor findShapeVisitor = new FindShapeVisitor(shape -> shape.perimeter() > 10);
+        Circle circle = new Circle(2.0); // area = 12.5664, perimeter = 12.5664
+        Rectangle rectangle = new Rectangle(2.0, 3.0); // area = 6, perimeter = 10
 
         CompoundShape compoundShape = new CompoundShape();
         compoundShape.add(circle);

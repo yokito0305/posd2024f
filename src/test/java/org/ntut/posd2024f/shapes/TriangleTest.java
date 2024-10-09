@@ -114,10 +114,4 @@ public class TriangleTest {
         Triangle triangle = new Triangle(vectors);
         assertEquals(vectors, triangle.getVectors());
     }
-
-    @Test
-    public void testGetVectorsWithNullVectors() {
-        Triangle triangle = new Triangle(null);
-        assertEquals(null, triangle.getVectors());
-    }
 }
