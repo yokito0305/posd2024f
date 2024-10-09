@@ -39,4 +39,10 @@ public class CircleTest {
         Circle circle = new Circle(radius);
         assertEquals(Math.PI * 2 * radius, circle.perimeter(), 0.01);
     }
+
+    @Test
+    public void testGetRadius() {
+        Circle circle = new Circle(radius);
+        assertEquals(radius, circle.getRadius(), 0.01);
+    }
 }

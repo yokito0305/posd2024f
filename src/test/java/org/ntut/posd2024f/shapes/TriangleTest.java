@@ -99,4 +99,25 @@ public class TriangleTest {
         Triangle triangle = new Triangle(vectors);
         assertEquals(6.0, triangle.area(), 0.01);
     }
+
+    @Test
+    public void testGetVectors() {
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 5);
+
+        List<TwoDimensionalVector> vectors = new ArrayList<>();
+        vectors.add(vector1);
+        vectors.add(vector2);
+        vectors.add(vector3);
+
+        Triangle triangle = new Triangle(vectors);
+        assertEquals(vectors, triangle.getVectors());
+    }
+
+    @Test
+    public void testGetVectorsWithNullVectors() {
+        Triangle triangle = new Triangle(null);
+        assertEquals(null, triangle.getVectors());
+    }
 }

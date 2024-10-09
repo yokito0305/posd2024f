@@ -2,7 +2,9 @@ package org.ntut.posd2024f.shapes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.beans.Transient;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -53,5 +55,16 @@ public class CompoundShapeTest {
     @Test
     public void testPerimeter() {
         assertEquals(57.42, compoundShape.perimeter(), 0.01);
+    }
+
+    @Test
+    public void testIterator() {
+        int count = 0;
+        Iterator<Shape> iterator = compoundShape.iterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+            count++;
+        }
+        assertEquals(3, count);
     }
 }

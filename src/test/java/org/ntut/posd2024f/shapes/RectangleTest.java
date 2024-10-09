@@ -57,4 +57,16 @@ public class RectangleTest {
         Rectangle rectangle = new Rectangle(length, width);
         assertEquals(2 * (length + width), rectangle.perimeter(), 0.01);
     }
+
+    @Test
+    public void testGetWidth() {
+        Rectangle rectangle = new Rectangle(length, width);
+        assertEquals(width, rectangle.getWidth(), 0.01);
+    }
+
+    @Test
+    public void testGetLength() {
+        Rectangle rectangle = new Rectangle(length, width);
+        assertEquals(length, rectangle.getLength(), 0.01);
+    }
 }
