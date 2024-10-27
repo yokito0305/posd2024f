@@ -7,109 +7,97 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("unused")
 public class TriangleTest {
     @Test
-    public void testConstructor() {
-        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
-        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
-        TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 5);
-
+    public void testTriangleCreate() {
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(vector1);
-        vectors.add(vector2);
-        vectors.add(vector3);
-        
-        Triangle triangle = new Triangle(vectors);
+        TwoDimensionalVector v1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector v2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector v3 = new TwoDimensionalVector(1, 5);
+        vectors.add(v1);
+        vectors.add(v2);
+        vectors.add(v3);
+
+        new Triangle(vectors); // area = 6, perimeter = 12
     }
 
     @Test
-    public void testConstructorWithOneSide() {
-        TwoDimensionalVector vector = new TwoDimensionalVector(3, 0);
-
+    public void testTriangleCreateWithTwoVectors() {
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(vector);
+        TwoDimensionalVector v1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector v2 = new TwoDimensionalVector(4, 1);
+        vectors.add(v1);
+        vectors.add(v2);
 
-        ShapeException exception = assertThrows(ShapeException.class, () -> {
-            Triangle triangle = new Triangle(vectors);
-        });
+        ShapeException exception = assertThrows(ShapeException.class, () -> new Triangle(vectors));
         assertEquals("It's not a triangle!", exception.getMessage());
     }
 
     @Test
-    public void testConstructorWithZeroSide(){
-        TwoDimensionalVector vector1 = new TwoDimensionalVector(0, 0);
-        TwoDimensionalVector vector2 = new TwoDimensionalVector(0, 0);
-        TwoDimensionalVector vector3 = new TwoDimensionalVector(0, 0);
-
+    public void testTriangleCreateWithThreeVectorsOnSameLine() {
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(vector1);
-        vectors.add(vector2);
-        vectors.add(vector3);
+        TwoDimensionalVector v1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector v2 = new TwoDimensionalVector(2, 2);
+        TwoDimensionalVector v3 = new TwoDimensionalVector(3, 3);
+        vectors.add(v1);
+        vectors.add(v2);
+        vectors.add(v3);
 
-        ShapeException exception = assertThrows(ShapeException.class, () -> {
-            Triangle triangle = new Triangle(vectors);
-        });
+        ShapeException exception = assertThrows(ShapeException.class, () -> new Triangle(vectors));
         assertEquals("It's not a triangle!", exception.getMessage());
     }
 
     @Test
-    public void testConstructorWithPallarelSide() {
-        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
-        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
-        TwoDimensionalVector vector3 = new TwoDimensionalVector(7, 1);
-
+    public void testTriangleCreateWithThreeVectorsOnSamePoint() {
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(vector1);
-        vectors.add(vector2);
-        vectors.add(vector3);
+        TwoDimensionalVector v1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector v2 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector v3 = new TwoDimensionalVector(1, 1);
+        vectors.add(v1);
+        vectors.add(v2);
+        vectors.add(v3);
 
-        ShapeException exception = assertThrows(ShapeException.class, () -> {
-            Triangle triangle = new Triangle(vectors);
-        });
+        ShapeException exception = assertThrows(ShapeException.class, () -> new Triangle(vectors));
         assertEquals("It's not a triangle!", exception.getMessage());
     }
 
     @Test
-    public void testPerimeter() {
-        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
-        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
-        TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 5);
-
+    public void testTriangleArea() {
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(vector1);
-        vectors.add(vector2);
-        vectors.add(vector3);
+        TwoDimensionalVector v1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector v2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector v3 = new TwoDimensionalVector(1, 5);
+        vectors.add(v1);
+        vectors.add(v2);
+        vectors.add(v3);
 
-        Triangle triangle = new Triangle(vectors);
-        assertEquals(12.0, triangle.perimeter(), 0.01);
+        Triangle triangle = new Triangle(vectors); // area = 6
+        assertEquals(6, triangle.area());
     }
 
     @Test
-    public void testArea() {
-        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
-        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
-        TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 5);
-
+    public void testTrianglePerimeter() {
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(vector1);
-        vectors.add(vector2);
-        vectors.add(vector3);
+        TwoDimensionalVector v1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector v2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector v3 = new TwoDimensionalVector(1, 5);
+        vectors.add(v1);
+        vectors.add(v2);
+        vectors.add(v3);
 
-        Triangle triangle = new Triangle(vectors);
-        assertEquals(6.0, triangle.area(), 0.01);
+        Triangle triangle = new Triangle(vectors); // perimeter = 12
+        assertEquals(12, triangle.perimeter());
     }
 
     @Test
-    public void testGetVectors() {
-        TwoDimensionalVector vector1 = new TwoDimensionalVector(1, 1);
-        TwoDimensionalVector vector2 = new TwoDimensionalVector(4, 1);
-        TwoDimensionalVector vector3 = new TwoDimensionalVector(1, 5);
-
+    public void testTriangleGetVectors() {
         List<TwoDimensionalVector> vectors = new ArrayList<>();
-        vectors.add(vector1);
-        vectors.add(vector2);
-        vectors.add(vector3);
+        TwoDimensionalVector v1 = new TwoDimensionalVector(1, 1);
+        TwoDimensionalVector v2 = new TwoDimensionalVector(4, 1);
+        TwoDimensionalVector v3 = new TwoDimensionalVector(1, 5);
+        vectors.add(v1);
+        vectors.add(v2);
+        vectors.add(v3);
 
         Triangle triangle = new Triangle(vectors);
         assertEquals(vectors, triangle.getVectors());

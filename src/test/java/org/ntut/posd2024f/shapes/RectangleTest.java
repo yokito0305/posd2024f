@@ -4,69 +4,45 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("unused")
 public class RectangleTest {
-    private static double length = 5;
-    private static double width = 10;
-    
     @Test
-    public void testConstructor() {
-        Rectangle rectangle = new Rectangle(5.0, 10.0);
+    public void testRectangleCreate() {
+        new Rectangle(3, 4); // area = 12, perimeter = 14
     }
 
     @Test
-    public void testConstructorWithNegativeWidth() {
-        ShapeException exception = assertThrows(ShapeException.class, () -> {
-            new Rectangle(-5.0, 10.0);
-        });
+    public void testRectangleCreateWithZeroLength() {
+        ShapeException exception = assertThrows(ShapeException.class, () -> new Rectangle(0, 4));
         assertEquals("It's not a rectangle!", exception.getMessage());
     }
 
     @Test
-    public void testConstructorWithNegativeHeight() {
-        ShapeException exception = assertThrows(ShapeException.class, () -> {
-            new Rectangle(5.0, -10.0);
-        });
+    public void testRectangleCreateWithZeroWidth() {
+        ShapeException exception = assertThrows(ShapeException.class, () -> new Rectangle(3, 0));
         assertEquals("It's not a rectangle!", exception.getMessage());
     }
 
     @Test
-    public void testConstructorWithZeroWidth() {
-        ShapeException exception = assertThrows(ShapeException.class, () -> {
-            new Rectangle(0, 10.0);
-        });
-        assertEquals("It's not a rectangle!", exception.getMessage());
+    public void testRectangleArea() {
+        Rectangle rectangle = new Rectangle(3, 4); // area = 12
+        assertEquals(12, rectangle.area());
     }
 
     @Test
-    public void testConstructorWithZeroHeight() {
-        ShapeException exception = assertThrows(ShapeException.class, () -> {
-            new Rectangle(5.0, 0);
-        });
-        assertEquals("It's not a rectangle!", exception.getMessage());
-    }
-
-    @Test
-    public void testArea() {
-        Rectangle rectangle = new Rectangle(length, width);
-        assertEquals(length * width, rectangle.area(), 0.01);
-    }
-
-    @Test
-    public void testPerimeter() {
-        Rectangle rectangle = new Rectangle(length, width);
-        assertEquals(2 * (length + width), rectangle.perimeter(), 0.01);
-    }
-
-    @Test
-    public void testGetWidth() {
-        Rectangle rectangle = new Rectangle(length, width);
-        assertEquals(width, rectangle.getWidth(), 0.01);
+    public void testRectanglePerimeter() {
+        Rectangle rectangle = new Rectangle(3, 4); // perimeter = 14
+        assertEquals(14, rectangle.perimeter());
     }
 
     @Test
     public void testGetLength() {
-        Rectangle rectangle = new Rectangle(length, width);
-        assertEquals(length, rectangle.getLength(), 0.01);
+        Rectangle rectangle = new Rectangle(3, 4);
+        assertEquals(3, rectangle.getLength());
+    }
+
+    @Test
+    public void testGetWidth() {
+        Rectangle rectangle = new Rectangle(3, 4);
+        assertEquals(4, rectangle.getWidth());
     }
 }
