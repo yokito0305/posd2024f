@@ -41,13 +41,13 @@ public class PrettyPrintVisitor implements Visitor<String>{
         }
         else {
             result += "CompoundShape {";
+            level++;
             while (it.hasNext()) {
-                level++;
                 Shape shape = it.next();
                 result += "\n" + getSpace();
                 shape.accept(this);
-                level--;
             }
+            level--;
             result += "\n" + getSpace() + "}";
         }
     }
