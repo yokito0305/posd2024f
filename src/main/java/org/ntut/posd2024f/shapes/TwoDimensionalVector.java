@@ -1,12 +1,8 @@
 package org.ntut.posd2024f.shapes;
 
-/**
- * The class TwoDimensionalVector is a vector in 2D space. 
- * It has two attributes, x and y, which are the coordinates of the vector. 
- */
 public class TwoDimensionalVector {
-    public int x;
-    public int y;
+    private int x;
+    private int y;
 
     public TwoDimensionalVector(int x, int y) {
         this.x = x;

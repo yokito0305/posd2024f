@@ -3,40 +3,40 @@ package org.ntut.posd2024f.shapes;
 import java.util.Iterator;
 
 public class ColoredShape implements Shape {
-    private Shape _shape;
-    private String _color;
+    private Shape shape;
+    private String color;
 
     public ColoredShape(Shape shape, String color) {
-        _color = color;
-        _shape = shape;
+        this.color = color;
+        this.shape = shape;
     }
 
     @Override
     public double area() {
-        return _shape.area();
+        return shape.area();
     }
 
     @Override
     public double perimeter() {
-        return _shape.perimeter();
+        return shape.perimeter();
     }
 
     @Override
     public void add(Shape shape) {
-        _shape.add(shape);
+        this.shape.add(shape);
     }
 
     @Override
     public Iterator<Shape> iterator() {
-        return _shape.iterator();
+        return this.shape.iterator();
     }
 
     public Shape getShape() {
-        return _shape;
+        return this.shape;
     }
 
     public String getColor() {
-        return _color;
+        return this.color;
     }
 
     @Override

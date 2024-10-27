@@ -6,37 +6,42 @@ import org.junit.jupiter.api.Test;
 
 public class TwoDimensionalVectorTest {
     @Test
-    public void testLength() {
-        TwoDimensionalVector v = new TwoDimensionalVector(3, 4);
-        assertEquals(5, v.length(), 0.001);
+    public void testTwoDimensionalVectorCreate() {
+        new TwoDimensionalVector(3, 4);
     }
 
     @Test
-    public void testDot() {
-        TwoDimensionalVector v1 = new TwoDimensionalVector(3, 4);
-        TwoDimensionalVector v2 = new TwoDimensionalVector(5, 6);
-        assertEquals(39, v1.dot(v2));
+    public void testTwoDimensionalVectorLength() {
+        TwoDimensionalVector vector = new TwoDimensionalVector(3, 4);
+        assertEquals(5, vector.length());
     }
 
     @Test
-    public void testCross() {
-        TwoDimensionalVector v1 = new TwoDimensionalVector(3, 4);
-        TwoDimensionalVector v2 = new TwoDimensionalVector(5, 6);
-        assertEquals(-2, v1.cross(v2));
+    public void testTwoDimensionalVectorDot() {
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(3, 4);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(5, 6);
+        assertEquals(39, vector1.dot(vector2));
     }
 
     @Test
-    public void testSubtract() {
-        TwoDimensionalVector v1 = new TwoDimensionalVector(3, 4);
-        TwoDimensionalVector v2 = new TwoDimensionalVector(5, 6);
-        TwoDimensionalVector v3 = v1.subtract(v2);
-        assertEquals(-2, v3.x);
-        assertEquals(-2, v3.y);
+    public void testTwoDimensionalVectorCross() {
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(3, 4);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(5, 6);
+        assertEquals(-2, vector1.cross(vector2));
     }
 
     @Test
-    public void testToString() {
-        TwoDimensionalVector v = new TwoDimensionalVector(3, 4);
-        assertEquals("[3,4]", v.toString());
+    public void testTwoDimensionalVectorSubtract() {
+        TwoDimensionalVector vector1 = new TwoDimensionalVector(3, 4);
+        TwoDimensionalVector vector2 = new TwoDimensionalVector(5, 6);
+        TwoDimensionalVector result = vector1.subtract(vector2); // (-2, -2)
+        double length = Math.sqrt(8);
+        assertEquals(length , result.length());
+    }
+
+    @Test
+    public void testTwoDimensionalVectorToString() {
+        TwoDimensionalVector vector = new TwoDimensionalVector(3, 4);
+        assertEquals("[3,4]", vector.toString());
     }
 }

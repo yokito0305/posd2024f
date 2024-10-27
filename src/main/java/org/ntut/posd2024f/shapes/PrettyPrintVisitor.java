@@ -3,87 +3,86 @@ package org.ntut.posd2024f.shapes;
 import java.util.Iterator;
 
 public class PrettyPrintVisitor implements Visitor<String>{
-    private String _result = "";
-    private int indentLevel = 0;
+    private String result = "";
+    private int level = 0;
 
     @Override
     public void visitCircle(Circle circle) {
-        _result += "Circle " + circle.getRadius();
+        result += "Circle " + Double.toString(circle.getRadius());
     }
 
     @Override
     public void visitRectangle(Rectangle rectangle) {
-        _result += "Rectangle " + rectangle.getLength() + " " + rectangle.getWidth();
+        result += "Rectangle " + Double.toString(rectangle.getLength()) + " " + Double.toString(rectangle.getWidth());
     }
 
     @Override
     public void visitTriangle(Triangle triangle) {
-        _result += "Triangle";
-        for (TwoDimensionalVector vector : triangle.getVectors()) {
-            _result += " " + vector.toString();
-        }
+        String v1 = triangle.getVectors().get(0).toString();
+        String v2 = triangle.getVectors().get(1).toString();
+        String v3 = triangle.getVectors().get(2).toString();
+        result += "Triangle " + v1 + " " + v2 + " " + v3;
     }
 
     @Override
     public void visitConvexPolygon(ConvexPolygon convexPolygon) {
-        _result += "ConvexPolygon";
+        String vectors = "";
         for (TwoDimensionalVector vector : convexPolygon.getVectors()) {
-            _result +=  " " +vector.toString();
+            vectors += " " + vector.toString();
         }
+        result += "ConvexPolygon" + vectors;
     }
 
     @Override
     public void visitCompoundShape(CompoundShape compoundShape) {
-        Boolean isEmpty = compoundShape.iterator().hasNext();
-        if (!isEmpty) {
-            _result += "CompoundShape {}";
-        } else {
-            /*The shapes in the compound shape should have an indent of 2 spaces. If the shape is a compound shape, the indent should be increased by 2 spaces. */
-            _result += "CompoundShape {";
-            indentLevel ++;
-            Iterator<Shape> iterator = compoundShape.iterator();
-            while (iterator.hasNext()) {
-                _result += "\n" + getIndent();
-                Shape shape = iterator.next();
+        Iterator<Shape> it = compoundShape.iterator();
+        if (!it.hasNext()) {
+            result += "CompoundShape {}";
+        }
+        else {
+            result += "CompoundShape {";
+            while (it.hasNext()) {
+                level++;
+                Shape shape = it.next();
+                result += "\n" + getSpace();
                 shape.accept(this);
-
+                level--;
             }
-            indentLevel --;
-            _result += "\n" + getIndent() + "}";
+            result += "\n" + getSpace() + "}";
         }
     }
 
-    private String getIndent() {
-        String indent = "";
-        for (int i = 0; i < indentLevel; i++) {
-            indent += "  ";
+    private String getSpace() {
+        String str = "";
+        for (int i = 0; i < level; i++) {
+            str += "  ";
         }
-        return indent;
+        return str;
     }
 
     @Override
     public void visitTextedShape(TextedShape textedShape) {
         textedShape.getShape().accept(this);
-        _result += ", text: " + textedShape.getText();
+        result += ", text: " + textedShape.getText();
     }
 
     @Override
     public void visitColoredShape(ColoredShape coloredShape) {
         switch (coloredShape.getColor().toUpperCase()) {
             case "RED":
-                _result += "\033[0;31m";
+                result += "\033[0;31m";
                 coloredShape.getShape().accept(this);
-                _result += "\033[0m";
+                result += "\033[0m";
                 break;
-            case "GREEN":
-                _result += "\033[0;32m";
+            case "GREEN": 
+                result += "\033[0;32m";
                 coloredShape.getShape().accept(this);
-                _result += "\033[0m";
+                result += "\033[0m";
                 break;
-            case "BLUE":
-                _result += "\033[0;34m";
+            case "BLUE": 
+                result += "\033[0;34m";
                 coloredShape.getShape().accept(this);
-                _result += "\033[0m";
+                result += "\033[0m";
                 break;
             default:
                 coloredShape.getShape().accept(this);
@@ -93,6 +92,6 @@ public class PrettyPrintVisitor implements Visitor<String>{
 
     @Override
     public String getResult() {
-        return _result;
+        return result;
     }
 }
