@@ -22,13 +22,14 @@ public class PriceVisitor implements ItemVisitor<Double> {
 
     @Override
     public void visitDiscountItem(DiscountItem discountItem) {
-        // DFSIterator dfsIterator = new DFSIterator(discountItem);
-        // discount = discount * (1 - discountItem.getDiscount());
-        // while (dfsIterator.hasNext()) {
-        //     Item item = dfsIterator.next();
-        //     item.accept(this);
-        // }
-        // discount = discount / (1 - discountItem.getDiscount());
+        DFSIterator dfsIterator = new DFSIterator(discountItem);
+        dfsIterator.next();
+        discount = discount * (1 - discountItem.getDiscount());
+        while (dfsIterator.hasNext()) {
+            Item item = dfsIterator.next();
+            item.accept(this);
+        }
+        discount = discount / (1 - discountItem.getDiscount());
     }
 
     @Override

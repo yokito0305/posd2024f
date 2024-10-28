@@ -25,15 +25,15 @@ public class PriceVisitorTest {
         assertEquals(100, visitor.getResult());
     }
 
-    // @Test
-    // public void testPriceVisitorWithDiscountItem() {
-    //     Item book = new Book("book1", 100);
-    //     Item bundle = new Bundle("bundle");
-    //     bundle.add(book);
-    //     Item discountItem = new DiscountItem(bundle, 0.5);
+    @Test
+    public void testPriceVisitorWithDiscountItem() {
+        Item book = new Book("book1", 100);
+        Item bundle = new Bundle("bundle");
+        bundle.add(book);
+        Item discountItem = new DiscountItem(bundle, 0.5);
 
-    //     PriceVisitor visitor = new PriceVisitor();
-    //     discountItem.accept(visitor);
-    //     assertEquals(50, visitor.getResult());
-    // }
+        PriceVisitor visitor = new PriceVisitor();
+        discountItem.accept(visitor);
+        assertEquals(50, visitor.getResult());
+    }
 }
