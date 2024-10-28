@@ -22,6 +22,14 @@ public class BookTest {
     }
 
     @Test
+    public void testBookCreateWithMulSpace() {
+        String title = "    ";
+        double price = 5;
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Book(title, price));
+        assertEquals("The book should have a title.", exception.getMessage());
+    }
+
+    @Test
     public void testBookCreateWithNullTitle() {
         String title = null;
         double price = 5;

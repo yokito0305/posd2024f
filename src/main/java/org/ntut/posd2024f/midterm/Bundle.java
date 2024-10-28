@@ -9,7 +9,11 @@ public class Bundle implements Item {
     private String title;
 
     public Bundle(String title) {
-        if (title == null || title.length() == 0) {
+        if (title == null) {
+            throw new IllegalArgumentException("The bundle should have a title.");
+        }
+        title = title.trim();
+        if (title.length() == 0) {
             throw new IllegalArgumentException("The bundle should have a title.");
         }
 

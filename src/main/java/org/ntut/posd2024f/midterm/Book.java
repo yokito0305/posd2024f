@@ -8,6 +8,10 @@ public class Book implements Item {
         if (title == null || title.length() == 0) {
             throw new IllegalArgumentException("The book should have a title.");
         }
+        title = title.trim();
+        if (title.length() == 0) {
+            throw new IllegalArgumentException("The book should have a title.");
+        }
         if (price < 0) {
             throw new IllegalArgumentException("The price should be greater than or equal to 0.");
         }

@@ -1,28 +1,38 @@
 package org.ntut.posd2024f.midterm;
 
-public class PriceVisitor implements ItemVisitor<Item> {
+import java.util.Iterator;
+
+public class PriceVisitor implements ItemVisitor<Double> {
+    private double price = 0;
+    private double discount = 1;
 
     @Override
     public void visitBook(Book book) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'visitBook'");
+        price += discount * book.getPrice();
     }
 
     @Override
     public void visitBundle(Bundle bundle) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'visitBundle'");
+        Iterator<Item> items = bundle.iterator();
+        while (items.hasNext()) {
+            Item item = items.next();
+            item.accept(this);
+        }
     }
 
     @Override
     public void visitDiscountItem(DiscountItem discountItem) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'visitDiscountItem'");
+        DFSIterator dfsIterator = new DFSIterator(discountItem);
+        discount = discount * (1 - discountItem.getDiscount());
+        while (dfsIterator.hasNext()) {
+            Item item = dfsIterator.next();
+            item.accept(this);
+        }
+        discount = discount / (1 - discountItem.getDiscount());
     }
 
     @Override
-    public Item getResult() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getResult'");
+    public Double getResult() {
+        return price;
     }
 }

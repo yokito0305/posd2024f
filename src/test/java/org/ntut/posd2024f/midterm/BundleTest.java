@@ -27,6 +27,13 @@ public class BundleTest {
     }
 
     @Test
+    public void testBundleCreateWithMulSpace() {
+        String title = "    ";
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Bundle(title));
+        assertEquals("The bundle should have a title.", exception.getMessage());
+    }
+
+    @Test
     public void testBundleAdd() {
         String title = "Bundle title";
         Bundle bundle = new Bundle(title);
