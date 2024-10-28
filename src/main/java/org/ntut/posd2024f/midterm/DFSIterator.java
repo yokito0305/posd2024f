@@ -16,7 +16,11 @@ public class DFSIterator implements Iterator<Item> {
 
     private void getNext(Item item) {
         items.add(item);
-        Iterator<Item> tmpIt = item.iterator();
+        Item myItem = item;
+        while (myItem instanceof DiscountItem) {
+            myItem = ((DiscountItem)myItem).getItem();
+        }
+        Iterator<Item> tmpIt = myItem.iterator();
         while (tmpIt.hasNext()) {
             Item tmpItem = tmpIt.next();
             items.add(tmpItem);
