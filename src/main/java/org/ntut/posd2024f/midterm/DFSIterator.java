@@ -7,21 +7,23 @@ import java.util.List;
 public class DFSIterator implements Iterator<Item> {
     private Iterator<Item> it;
     public List<Item> items = new ArrayList<Item>();
-    
-    public DFSIterator(Item item) {
-        items.add(item);
 
-        Iterator<Item> tmpIt = item.iterator();
-        while (tmpIt.hasNext()) {
-            items.add(tmpIt.next());
-            if (item.iterator().hasNext()) {
-                getNext(item.iterator().next());
-            }
-        }
+    public DFSIterator(Item item) {
+        getNext(item);
+
+        it = items.iterator();
     }
 
     private void getNext(Item item) {
         items.add(item);
+        Iterator<Item> tmpIt = item.iterator();
+        while (tmpIt.hasNext()) {
+            Item tmpItem = tmpIt.next();
+            items.add(tmpItem);
+            if (tmpItem.iterator().hasNext()) {
+                getNext(tmpItem.iterator().next());
+            }
+        }
     }
 
     @Override
@@ -31,7 +33,6 @@ public class DFSIterator implements Iterator<Item> {
 
     @Override
     public Item next() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'next'");
+        return it.next();
     }
 }

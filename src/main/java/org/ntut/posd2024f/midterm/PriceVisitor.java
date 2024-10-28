@@ -21,7 +21,7 @@ public class PriceVisitor implements ItemVisitor<Item> {
     }
 
     @Override
-    public Object getResult() {
+    public Item getResult() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getResult'");
     }
