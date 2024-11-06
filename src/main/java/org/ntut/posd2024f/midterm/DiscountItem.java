@@ -1,5 +1,7 @@
 package org.ntut.posd2024f.midterm;
 
+import java.util.Iterator;
+
 public class DiscountItem implements Item {
     private Item item;
     private double discount;
@@ -22,8 +24,15 @@ public class DiscountItem implements Item {
     }
 
     @Override
+    public Iterator<Item> iterator() {
+        return item.iterator();
+    }
+
+    @Override
     public String getTitle() {
-        return "<" + item.getTitle() + "> is on sale! " + Integer.toString((int)(discount * 1000 / 10)) + "% off!";
+        String discountStr = (discount * 100 % 1 == 0) ? String.format("%.0f", discount * 100) : String.format("%.1f", discount * 100);
+        return "<" + item.getTitle() + "> is on sale! " + discountStr + "% off!";
+
     }
 
     @Override

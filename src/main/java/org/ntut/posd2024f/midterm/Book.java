@@ -5,7 +5,7 @@ public class Book implements Item {
     private double price;
 
     public Book(String title, double price) {
-        if (title == null || title.length() == 0) {
+        if (title == null) {
             throw new IllegalArgumentException("The book should have a title.");
         }
         title = title.trim();

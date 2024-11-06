@@ -3,6 +3,8 @@ package org.ntut.posd2024f.midterm;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.NoSuchElementException;
+
 import org.junit.jupiter.api.Test;
 
 public class DiscountItemTest {
@@ -54,6 +56,14 @@ public class DiscountItemTest {
     }
 
     @Test
+    public void testDiscountItemGetTitle2() {
+        Item book = new Book("Happy Potter", 100);
+        double discount = 0.213;
+        DiscountItem discountItem = new DiscountItem(book, discount);
+        assertEquals("<Happy Potter> is on sale! 21.3% off!", discountItem.getTitle());
+    }
+
+    @Test
     public void testDiscountItemGetTitleWithBundle() {
         Item book = new Book("Happy Potter", 100);
         Item bundle = new Bundle("bundle of Happy Potter");
@@ -84,5 +94,15 @@ public class DiscountItemTest {
 
         BookStoreException exception = assertThrows(BookStoreException.class, () -> discountItem.add(book));
         assertEquals("Only bundle can add the item.", exception.getMessage());
+    }
+
+    @Test 
+    public void testDiscountItemIterator() {
+        Item book = new Book("book", 100);
+        double discount = 0.1;
+        DiscountItem discountItem = new DiscountItem(book, discount);
+
+        NoSuchElementException exception = assertThrows(NoSuchElementException.class, () -> discountItem.iterator().next());
+        assertEquals("No more element.", exception.getMessage());
     }
 }

@@ -6,43 +6,23 @@ import java.util.List;
 
 public class DFSIterator implements Iterator<Item> {
     private Iterator<Item> it;
-    public List<Item> items = new ArrayList<Item>();
+    private List<Item> items;
 
     public DFSIterator(Item item) {
+        items = new ArrayList<Item>();
         getNext(item);
 
         it = items.iterator();
     }
-
-    // private void getNext(Item item) {
-    //     items.add(item);
-    //     Item myItem = item;
-    //     while (myItem instanceof DiscountItem) {
-    //         myItem = ((DiscountItem)myItem).getItem();
-    //     }
-    //     Iterator<Item> tmpIt = myItem.iterator();
-    //     while (tmpIt.hasNext()) {
-    //         Item tmpItem = tmpIt.next();
-    //         items.add(tmpItem);
-    //         if (tmpItem.iterator().hasNext()) {
-    //             getNext(tmpItem.iterator().next());
-    //         }
-    //     }
-    // }
     
     private void getNext(Item item) {
         Item myItem = item;
-
+        
         items.add(myItem);
-        while (myItem instanceof DiscountItem) {
-            myItem = ((DiscountItem)myItem).getItem();
-        }
-        Iterator<Item> tmpIt = myItem.iterator();
-        while (tmpIt.hasNext()) {
-            Item tmpItem = tmpIt.next();
-            items.add(tmpItem);
-            if (tmpItem.iterator().hasNext()) {
-                getNext(tmpItem.iterator().next());
+        if (!(myItem instanceof Book)) {
+            Iterator<Item> it = myItem.iterator();
+            while (it.hasNext()) {
+                getNext(it.next());
             }
         }
     }
