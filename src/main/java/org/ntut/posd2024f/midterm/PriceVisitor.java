@@ -1,5 +1,7 @@
 package org.ntut.posd2024f.midterm;
 
+import java.util.Iterator;
+
 public class PriceVisitor implements ItemVisitor<Double> {
     private double price = 0;
     private double discount = 0;
@@ -11,10 +13,9 @@ public class PriceVisitor implements ItemVisitor<Double> {
 
     @Override
     public void visitBundle(Bundle bundle) {
-        DFSIterator dfsIterator = new DFSIterator(bundle);
-        dfsIterator.next();
-        while (dfsIterator.hasNext()) {
-            dfsIterator.next().accept(this);
+        Iterator<Item> iterator = bundle.iterator(); 
+        while (iterator.hasNext()) {
+            iterator.next().accept(this);
         }
     }
 
