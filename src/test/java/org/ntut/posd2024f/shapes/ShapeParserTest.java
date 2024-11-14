@@ -317,6 +317,19 @@ public class ShapeParserTest {
         assertEquals("Expected token '}'", exception.getMessage());
     }
 
+    // Expected token '}'
+    @Test
+    public void testParserEmptyCompoundShapeWithIllegalRightBracket2() {
+        String path = "src/test_data/compoundShape_illegal4.txt";
+        File file = new File(path);
+        ShapeParser parser = new ShapeParser(file);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            parser.parse();
+        });
+        parser.parse();
+        assertEquals("Expected token '}'", exception.getMessage());
+    }
+
     // test nestedCompoundShape
     @Test
     public void testParserWithNestedCompoundShape() {

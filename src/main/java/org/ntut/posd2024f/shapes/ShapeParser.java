@@ -174,6 +174,7 @@ public class ShapeParser {
     }
 
     private void parseCompoundShape(String[] info, int spacesNum) {
+        Boolean isFirst = true;
         String color = null;
         String text = null;
 
@@ -201,16 +202,12 @@ public class ShapeParser {
             String line = scanner.nextLine();
             int nextLineSpaces = getSpacesNum(line);
             line = line.trim();
-            if (nextLineSpaces == spacesNum) {
-                if (line.equals("}")) {
-                    builder.endBuildCompoundShape();
-                    return;
-                }
-
+            if (nextLineSpaces == spacesNum && isFirst) {
                 if (!info[i].contains("}")) {
                     throw new IllegalArgumentException("Expected token '}'");
                 }
             }
+            isFirst = false;
             
             parseLine(line);
             
