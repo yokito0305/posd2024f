@@ -1,0 +1,1 @@
+Rectangle 3.0 4.0, text=This is a rectangle
