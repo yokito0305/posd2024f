@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 public class ShapeParser {
+    List<Shape> shapes;
 
     public ShapeParser(File file) {
     }
@@ -12,5 +13,6 @@ public class ShapeParser {
     }
 
     public List<Shape> getResult() {
+        return shapes;
     }
 }
