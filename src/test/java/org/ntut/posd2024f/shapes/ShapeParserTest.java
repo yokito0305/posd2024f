@@ -317,6 +317,31 @@ public class ShapeParserTest {
         assertEquals("Expected token '}'", exception.getMessage());
     }
 
+    // test nestedCompoundShape
+    @Test
+    public void testParserWithNestedCompoundShape() {
+        String path = "src/test_data/nestedCompoundShape.txt";
+        File file = new File(path);
+        ShapeParser parser = new ShapeParser(file);
+        parser.parse();
+
+        List<Shape> shapes = parser.getResult();
+        assertEquals(1, shapes.size());
+        assertEquals(CompoundShape.class, shapes.get(0).getClass());
+        Iterator<Shape> iterator = ((CompoundShape)shapes.get(0)).iterator();
+        assertEquals(Circle.class, iterator.next().getClass());
+
+        CompoundShape compoundShape = (CompoundShape)iterator.next();
+        assertEquals(CompoundShape.class, compoundShape.getClass());
+        Iterator<Shape> iterator2 = compoundShape.iterator();
+        assertEquals(Circle.class, iterator2.next().getClass());
+        assertEquals(Rectangle.class, iterator2.next().getClass());
+        assertFalse(iterator2.hasNext());
+
+        assertEquals(Rectangle.class, iterator.next().getClass());
+        assertFalse(iterator.hasNext());
+    }
+
     // other test
     @Test
     public void testStringSplit() {

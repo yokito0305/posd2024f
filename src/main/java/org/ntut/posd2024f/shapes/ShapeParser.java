@@ -208,13 +208,18 @@ public class ShapeParser {
                 }
 
                 if (!info[i].contains("}")) {
-                    throw new IllegalArgumentException("Invalid indentation");
+                    throw new IllegalArgumentException("Expected token '}'");
                 }
             }
             
             parseLine(line);
+            
+            if (line.equals("}")) {
+                builder.endBuildCompoundShape();
+                return;
+            }
         }
-
+        
         throw new IllegalArgumentException("Expected token '}'");
     }
 
