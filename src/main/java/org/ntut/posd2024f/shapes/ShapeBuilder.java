@@ -84,8 +84,8 @@ public class ShapeBuilder {
     }
 
     public void endBuildCompoundShape() {
-        CompoundShape compoundShape = (CompoundShape) stack.pop();
-        compoundShape = (CompoundShape) decorateShape(compoundShape, this._color, this._text);
+        Shape compoundShape = (CompoundShape) stack.pop();
+        compoundShape = decorateShape(compoundShape, this._color, this._text);
         if (stack.isEmpty()) {
             shapes.add(compoundShape);
         } else {
