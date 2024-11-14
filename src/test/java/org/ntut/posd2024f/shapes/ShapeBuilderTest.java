@@ -278,4 +278,48 @@ public class ShapeBuilderTest {
         assertEquals(CompoundShape.class, shapes.get(0).getClass());
         assertEquals(40.274, shapes.get(0).area(), 0.001);
     }
+
+    @Test
+    public void testBuildCompoundShapeWithColor() {
+        ShapeBuilder shapeBuilder = new ShapeBuilder();
+        shapeBuilder.beginBuildCompoundShape("red", null);
+        shapeBuilder.buildCircle(3, null, null); // area = 28.274
+        shapeBuilder.buildRectangle(3, 4, null, null); // area = 12
+        shapeBuilder.endBuildCompoundShape();
+
+        List<Shape> shapes = shapeBuilder.getResult();
+
+        assertEquals(ColoredShape.class, shapes.get(0).getClass());
+        assertEquals("red", ((ColoredShape) shapes.get(0)).getColor());
+    }
+
+    @Test
+    public void testBuildCompoundShapeWithText() {
+        ShapeBuilder shapeBuilder = new ShapeBuilder();
+        shapeBuilder.beginBuildCompoundShape(null, "compoundShape");
+        shapeBuilder.buildCircle(3, null, null); // area = 28.274
+        shapeBuilder.buildRectangle(3, 4, null, null); // area = 12
+        shapeBuilder.endBuildCompoundShape();
+
+        List<Shape> shapes = shapeBuilder.getResult();
+
+        assertEquals(TextedShape.class, shapes.get(0).getClass());
+        assertEquals("compoundShape", ((TextedShape) shapes.get(0)).getText());
+    }
+
+    @Test
+    public void testBuildCompoundShapeWithColorAndText() {
+        ShapeBuilder shapeBuilder = new ShapeBuilder();
+        shapeBuilder.beginBuildCompoundShape("red", "compoundShape");
+        shapeBuilder.buildCircle(3, null, null); // area = 28.274
+        shapeBuilder.buildRectangle(3, 4, null, null); // area = 12
+        shapeBuilder.endBuildCompoundShape();
+
+        List<Shape> shapes = shapeBuilder.getResult();
+
+        assertEquals(TextedShape.class, shapes.get(0).getClass());
+        assertEquals("compoundShape", ((TextedShape) shapes.get(0)).getText());
+        assertEquals(ColoredShape.class, ((TextedShape) shapes.get(0)).getShape().getClass());
+        assertEquals("red", ((ColoredShape) ((TextedShape) shapes.get(0)).getShape()).getColor());
+    }
 }

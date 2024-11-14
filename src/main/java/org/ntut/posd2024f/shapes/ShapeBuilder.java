@@ -7,13 +7,15 @@ import java.util.Stack;
 public class ShapeBuilder {
     private List<Shape> shapes = null;
     private Stack<Shape> stack = null;
-    private String _color = null;
-    private String _text = null;
+    private Stack<String> colorStack = null;
+    private Stack<String> textStack = null;
 
 
     public ShapeBuilder() {
         shapes = new ArrayList<Shape>();
         stack = new Stack<Shape>();
+        colorStack = new Stack<String>();
+        textStack = new Stack<String>();
     }
 
     private Shape decorateShape(Shape shape, String color, String text) {
@@ -77,15 +79,17 @@ public class ShapeBuilder {
     }
 
     public void beginBuildCompoundShape(String color, String text) {
-        this._color = color;
-        this._text = text;
+        colorStack.push(color);
+        textStack.push(text);
         CompoundShape compoundShape = new CompoundShape();
         stack.push(compoundShape);
     }
 
     public void endBuildCompoundShape() {
         Shape compoundShape = (CompoundShape) stack.pop();
-        compoundShape = decorateShape(compoundShape, this._color, this._text);
+        String color = colorStack.pop();
+        String text = textStack.pop();
+        compoundShape = decorateShape(compoundShape, color, text);
         if (stack.isEmpty()) {
             shapes.add(compoundShape);
         } else {
