@@ -9,6 +9,7 @@ public class ShapeParser {
     private List<Shape> shapes = null;
     private Scanner scanner = null;
     private ShapeBuilder builder = null;
+    private boolean isClosed = false;
 
     public ShapeParser(File file) {
         try {
@@ -32,7 +33,7 @@ public class ShapeParser {
     }
 
     private void parseLine(String line) {
-        String[] info = line.split(", ");
+        String[] info = line.trim().split(", ");
             switch (info[0].split(" ")[0]) {
                 case "Circle":
                     parseCircle(info);
@@ -196,31 +197,39 @@ public class ShapeParser {
         if (!info[i].contains("{")) {
             throw new IllegalArgumentException("Expected token '{'");
         }
-
         builder.beginBuildCompoundShape(color, text);
+
+        if (isFirst && info[i].contains("}")) {
+            builder.endBuildCompoundShape();
+            return;
+        }
+        isFirst = false;
+
+
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             int nextLineSpaces = getSpacesNum(line);
-            line = line.trim();
-            if (nextLineSpaces == spacesNum && isFirst) {
-                if (!info[i].contains("}")) {
+            if (nextLineSpaces <= spacesNum) {
+                if (isFirst && !info[i].contains("}")) {
                     throw new IllegalArgumentException("Expected token '}'");
+                } else if (isFirst && info[i].contains("}")) {
+                    builder.endBuildCompoundShape();
+                    isClosed = true;
+                    return;
+                } else if (line.trim().equals("}")) {
+                    builder.endBuildCompoundShape();
+                    return;
                 }
             }
-            isFirst = false;
             
             parseLine(line);
-            
-            if (line.equals("}")) {
-                builder.endBuildCompoundShape();
-                return;
-            }
         }
         
-        if (!info[i].contains("}")) {
+        if (!isClosed && !info[i].contains("}")) {
             throw new IllegalArgumentException("Expected token '}'");
         }
         builder.endBuildCompoundShape();
+        isClosed = false;
     }
 
     public List<Shape> getResult() {

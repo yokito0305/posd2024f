@@ -369,6 +369,20 @@ public class ShapeParserTest {
         assertFalse(((CompoundShape)shapes.get(0)).iterator().hasNext());
     }
 
+    // test emptyCompoundShape2
+    @Test
+    public void testParserWithEmptyCompoundShape2() {
+        String path = "src/test_data/emptyCompoundShape2.txt";
+        File file = new File(path);
+        ShapeParser parser = new ShapeParser(file);
+        parser.parse();
+
+        List<Shape> shapes = parser.getResult();
+        assertEquals(1, shapes.size());
+        assertEquals(CompoundShape.class, shapes.get(0).getClass());
+        assertEquals(CompoundShape.class, shapes.get(0).iterator().next().getClass());
+    }
+
 
     // other test
     @Test
