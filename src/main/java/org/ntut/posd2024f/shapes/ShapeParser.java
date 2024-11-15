@@ -217,7 +217,9 @@ public class ShapeParser {
             }
         }
         
-        throw new IllegalArgumentException("Expected token '}'");
+        if (!scanner.hasNextLine()) {
+            throw new IllegalArgumentException("Expected token '}'");
+        }
     }
 
     public List<Shape> getResult() {
