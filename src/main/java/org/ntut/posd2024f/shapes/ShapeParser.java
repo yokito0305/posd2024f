@@ -217,9 +217,10 @@ public class ShapeParser {
             }
         }
         
-        if (!scanner.hasNextLine()) {
+        if (!info[i].contains("}")) {
             throw new IllegalArgumentException("Expected token '}'");
         }
+        builder.endBuildCompoundShape();
     }
 
     public List<Shape> getResult() {
