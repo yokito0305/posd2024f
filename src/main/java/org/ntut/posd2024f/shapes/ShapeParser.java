@@ -63,7 +63,7 @@ public class ShapeParser {
                 parseConvexPolygon(info, color, text);
                 break;
             case "CompoundShape":
-                parseCompoundShape(info, color, text, getSpacesNum(line));
+                parseCompoundShape(info, color, text);
                 break;
             default:
                 break;
@@ -101,7 +101,7 @@ public class ShapeParser {
         builder.buildConvexPolygon(vectors, color, text);
     }
 
-    private void parseCompoundShape(String[] info, String color, String text, int spacesNum) {
+    private void parseCompoundShape(String[] info, String color, String text) {
         Boolean isFirst = true;
         int length = info.length;
 
@@ -119,7 +119,6 @@ public class ShapeParser {
             throw new IllegalArgumentException("Expected token '{'");
         }
         builder.beginBuildCompoundShape(color, text);
-
         if (isFirst && info[length - 1].contains("}")) {
             builder.endBuildCompoundShape();
             return;
@@ -129,12 +128,9 @@ public class ShapeParser {
         // parse compound shape
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            int nextLineSpaces = getSpacesNum(line);
-            if (nextLineSpaces <= spacesNum) {
-                if (line.trim().equals("}")) {
-                    builder.endBuildCompoundShape();
-                    return;
-                }
+            if (line.trim().equals("}")) {
+                builder.endBuildCompoundShape();
+                return;
             }
             parseLine(line);
         }
@@ -157,19 +153,6 @@ public class ShapeParser {
         
         String[] coordinates = vector.substring(1, vector.length() - 1).split(",");
         return new TwoDimensionalVector(Integer.parseInt(coordinates[0].trim()), Integer.parseInt(coordinates[1].trim()));
-    }
-    
-    // get the number of spaces in the beginning of the line
-    private int getSpacesNum(String line) {
-        int count = 0;
-        for (int i = 0; i < line.length(); i++) {
-            if (line.charAt(i) == ' ') {
-                count++;
-            } else {
-                break;
-            }
-        }
-        return count;
     }
 
     public List<Shape> getResult() {
