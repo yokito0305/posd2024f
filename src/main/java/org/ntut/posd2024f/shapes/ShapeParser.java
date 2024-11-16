@@ -104,6 +104,15 @@ public class ShapeParser {
     private void parseCompoundShape(String[] info, String color, String text, int spacesNum) {
         Boolean isFirst = true;
         int length = info.length;
+
+        // fix color and text
+        // remove the '{' and '}' at the end of the string
+        if (color != null) {
+            color = color.split(" ")[0];
+        }
+        if (text != null) {
+            text = text.substring(0, text.length() -  2);
+        }
         
         // check if it is a empty compound shape
         if (!info[length - 1].contains("{")) {
