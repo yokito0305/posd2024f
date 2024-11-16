@@ -111,7 +111,8 @@ public class ShapeParser {
             color = color.split(" ")[0];
         }
         if (text != null) {
-            text = text.substring(0, text.length() -  2);
+            int i = (text.contains("}") ? 3 : 2);
+            text = text.substring(0, text.length() -  i);
         }
         
         // check if it is a empty compound shape
