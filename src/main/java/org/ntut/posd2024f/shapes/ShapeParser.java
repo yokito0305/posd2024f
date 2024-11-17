@@ -31,26 +31,26 @@ public class ShapeParser {
                 String[] info = line.split(", ");
 
                 // get color and text
-                // tokens[0] = shape, tokens[1] = color, tokens[2] = text
-                List<String> tokens = getToken(info);
+                // tokens[0] = shape, tokens[1] = color.info, tokens[2] = text.info
+                String[] tokens = getToken(info);
 
                 // build shape
-                switch (tokens.get(0)) {
+                switch (tokens[0]) {
                     case "Circle":
-                        parseCircle(info, tokens.get(1), tokens.get(2));
+                        parseCircle(info, tokens[1], tokens[2]);
                         break;
                     case "Rectangle":
-                        parseRectangle(info, tokens.get(1), tokens.get(2));
+                        parseRectangle(info, tokens[1], tokens[2]);
                         break;
                     case "Triangle":
-                        parseTriangle(info, tokens.get(1), tokens.get(2));
+                        parseTriangle(info, tokens[1], tokens[2]);
                         break;
                     case "ConvexPolygon":
-                        parseConvexPolygon(info, tokens.get(1), tokens.get(2));
+                        parseConvexPolygon(info, tokens[1], tokens[2]);
                         break;
                     case "CompoundShape":
                         count_bracket++;
-                        parseCompoundShape(info, tokens.get(1), tokens.get(2));
+                        parseCompoundShape(info, tokens[1], tokens[2]);
                         if (info[info.length - 1].contains("{") && info[info.length - 1].contains("}")) {
                             builder.endBuildCompoundShape();
                             count_bracket--;
@@ -113,9 +113,9 @@ public class ShapeParser {
     }
 
     // getToken from string[]
-    private List<String> getToken(String[] info) {
+    private String[] getToken(String[] info) {
         // get color and text
-        List<String> tokens = new ArrayList<String>();
+        String[] tokens = {null, null, null};
         String color = null;
         String text = null;
         String shape = info[0].split(" ")[0];
@@ -133,9 +133,9 @@ public class ShapeParser {
                     break;
             }
         }
-        tokens.add(shape);
-        tokens.add(color);
-        tokens.add(text);
+        tokens[0] = shape;
+        tokens[1] = color;
+        tokens[2] = text;
         return tokens;
     }
 
