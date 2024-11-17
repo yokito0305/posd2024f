@@ -33,37 +33,25 @@ public class ShapeParser {
         String[] info = line.trim().split(", ");
 
         // get color and text
-        String color = null;
-        String text = null;
-        for (int i = 1; i < info.length; i++) {
-            String[] keyValue = info[i].split("=");
-            switch (keyValue[0]) {
-                case "color":
-                    color = keyValue[1];
-                    break;
-                case "text":
-                    text = keyValue[1];
-                    break;
-                default:
-                    break;
-            }
-        }
+        // tokens[0] = shape, tokens[1] = color, tokens[2] = text
+        List<String> tokens = getToken(info);
+        
         // build shape
-        switch (info[0].split(" ")[0]) {
+        switch (tokens.get(0)) {
             case "Circle":
-                parseCircle(info, color, text);
+                parseCircle(info, tokens.get(1), tokens.get(2));
                 break;
             case "Rectangle":
-                parseRectangle(info, color, text);
+                parseRectangle(info, tokens.get(1), tokens.get(2));
                 break;
             case "Triangle":
-                parseTriangle(info, color, text);
+                parseTriangle(info, tokens.get(1), tokens.get(2));
                 break;
             case "ConvexPolygon":
-                parseConvexPolygon(info, color, text);
+                parseConvexPolygon(info, tokens.get(1), tokens.get(2));
                 break;
             case "CompoundShape":
-                parseCompoundShape(info, color, text);
+                parseCompoundShape(info, tokens.get(1), tokens.get(2));
                 break;
             default:
                 break;
@@ -105,16 +93,6 @@ public class ShapeParser {
         Boolean isFirst = true;
         int length = info.length;
 
-        // fix color and text
-        // remove the '{' and '}' at the end of the string
-        if (color != null) {
-            color = color.split(" ")[0];
-        }
-        if (text != null) {
-            int i = (text.contains("}") ? 3 : 2);
-            text = text.substring(0, text.length() -  i);
-        }
-        
         // check if it is a empty compound shape
         if (!info[length - 1].contains("{")) {
             throw new IllegalArgumentException("Expected token '{'");
@@ -138,6 +116,33 @@ public class ShapeParser {
         
         // check if there is no '}' at the end of the file
         throw new IllegalArgumentException("Expected token '}'");
+    }
+
+    // getToken from string[]
+    private List<String> getToken(String[] info) {
+        // get color and text
+        List<String> tokens = new ArrayList<String>();
+        String color = null;
+        String text = null;
+        String shape = info[0].split(" ")[0];
+        for (int i = 1; i < info.length; i++) {
+            String[] keyValue = info[i].split("=");
+            switch (keyValue[0]) {
+                case "color":
+                    color = (shape.equals("CompoundShape") ? keyValue[1].split(" ")[0] : keyValue[1]);
+                    break;
+                case "text":
+                    int j = (keyValue[1].contains("}") ? 3 : 2);
+                    text = (shape.equals("CompoundShape") ? keyValue[1].substring(0, keyValue[1].length() -  j) : keyValue[1]);
+                    break;
+                default:
+                    break;
+            }
+        }
+        tokens.add(shape);
+        tokens.add(color);
+        tokens.add(text);
+        return tokens;
     }
 
     // get two dimensional vector from string

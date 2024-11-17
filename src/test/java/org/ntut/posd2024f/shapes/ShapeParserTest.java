@@ -278,6 +278,25 @@ public class ShapeParserTest {
         assertFalse(iterator.hasNext());
     }
 
+    // test compoundShape
+    @Test
+    public void testParserWithCompoundShape2() {
+        String path = "src/test_data/compoundShape2.txt";
+        File file = new File(path);
+        ShapeParser parser = new ShapeParser(file);
+        parser.parse();
+
+        List<Shape> shapes = parser.getResult();
+        assertEquals(3, shapes.size());
+        assertEquals(CompoundShape.class, shapes.get(0).getClass());
+        Iterator<Shape> iterator = ((CompoundShape)shapes.get(0)).iterator();
+        assertFalse(iterator.hasNext());
+        assertEquals(TextedShape.class, shapes.get(1).getClass());
+        assertEquals("This is a compound shape", ((TextedShape)shapes.get(1)).getText());
+        assertEquals(ColoredShape.class, shapes.get(2).getClass());
+        assertEquals("RED", ((ColoredShape)shapes.get(2)).getColor());
+    }
+
     // Expected token '{'
     @Test
     public void testParserCompoundShapeWithIllegalLeftBracket() {

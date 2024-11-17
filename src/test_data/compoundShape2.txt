@@ -1,0 +1,3 @@
+CompoundShape {}
+CompoundShape, color=RED, text=This is a compound shape {}
+CompoundShape, color=RED {}
