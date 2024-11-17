@@ -1,102 +1,76 @@
 package org.ntut.posd2024f.shapes;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ShapeParser {
     private List<Shape> shapes = null;
-    private Scanner scanner = null;
     private ShapeBuilder builder = null;
+    private File file = null;
 
     public ShapeParser(File file) {
-        try {
-            scanner = new Scanner(file);
-        } catch (Exception e) {
+        try (Scanner scanner = new Scanner(file)) {
+        } catch (IOException e) {
             throw new RuntimeException("File not found");
         }
 
-        shapes = new ArrayList<Shape>();
+        this.builder = new ShapeBuilder();
+        this.shapes = new ArrayList<Shape>();
+        this.file = file;
     }
 
     public void parse() {
-        int count_bracket = 0;
-        builder = new ShapeBuilder();
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine().trim();
-            String[] info = line.split(", ");
+        try (Scanner scanner = new Scanner(file)) {
+            int count_bracket = 0;
 
-            // get color and text
-            // tokens[0] = shape, tokens[1] = color, tokens[2] = text
-            List<String> tokens = getToken(info);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+                String[] info = line.split(", ");
 
-            // build shape
-            switch (tokens.get(0)) {
-                case "Circle":
-                    parseCircle(info, tokens.get(1), tokens.get(2));
-                    break;
-                case "Rectangle":
-                    parseRectangle(info, tokens.get(1), tokens.get(2));
-                    break;
-                case "Triangle":
-                    parseTriangle(info, tokens.get(1), tokens.get(2));
-                    break;
-                case "ConvexPolygon":
-                    parseConvexPolygon(info, tokens.get(1), tokens.get(2));
-                    break;
-                case "CompoundShape":
-                    count_bracket++;
-                    parseCompoundShape(info, tokens.get(1), tokens.get(2));
-                    if (info[info.length - 1].contains("{") && info[info.length - 1].contains("}")) {
+                // get color and text
+                // tokens[0] = shape, tokens[1] = color, tokens[2] = text
+                List<String> tokens = getToken(info);
+
+                // build shape
+                switch (tokens.get(0)) {
+                    case "Circle":
+                        parseCircle(info, tokens.get(1), tokens.get(2));
+                        break;
+                    case "Rectangle":
+                        parseRectangle(info, tokens.get(1), tokens.get(2));
+                        break;
+                    case "Triangle":
+                        parseTriangle(info, tokens.get(1), tokens.get(2));
+                        break;
+                    case "ConvexPolygon":
+                        parseConvexPolygon(info, tokens.get(1), tokens.get(2));
+                        break;
+                    case "CompoundShape":
+                        count_bracket++;
+                        parseCompoundShape(info, tokens.get(1), tokens.get(2));
+                        if (info[info.length - 1].contains("{") && info[info.length - 1].contains("}")) {
+                            builder.endBuildCompoundShape();
+                            count_bracket--;
+                        }
+                        break;
+                    case "}":
                         builder.endBuildCompoundShape();
                         count_bracket--;
-                    }
-                    break;
-                case "}":
-                    builder.endBuildCompoundShape();
-                    count_bracket--;
-                    break;
-                default:
-                    break;
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
 
-        if (count_bracket != 0) {
-            throw new IllegalArgumentException("Expected token '}'");
-        }
-        shapes = builder.getResult();
-    }
-
-    private void parseLine(String line) {
-        String[] info = line.trim().split(", ");
-
-        // get color and text
-        // tokens[0] = shape, tokens[1] = color, tokens[2] = text
-        List<String> tokens = getToken(info);
-        
-        // build shape
-        switch (tokens.get(0)) {
-            case "Circle":
-                parseCircle(info, tokens.get(1), tokens.get(2));
-                break;
-            case "Rectangle":
-                parseRectangle(info, tokens.get(1), tokens.get(2));
-                break;
-            case "Triangle":
-                parseTriangle(info, tokens.get(1), tokens.get(2));
-                break;
-            case "ConvexPolygon":
-                parseConvexPolygon(info, tokens.get(1), tokens.get(2));
-                break;
-            case "CompoundShape":
-                parseCompoundShape(info, tokens.get(1), tokens.get(2));
-                break;
-            case "}":
-                builder.endBuildCompoundShape();
-                break;
-            default:
-                break;
+            if (count_bracket != 0) {
+                throw new IllegalArgumentException("Expected token '}'");
+            }
+            shapes = builder.getResult();
+        } catch (IOException e) {
+            throw new RuntimeException("File not found");
         }
     }
 
