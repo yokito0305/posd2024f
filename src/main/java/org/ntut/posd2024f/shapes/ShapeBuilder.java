@@ -86,6 +86,9 @@ public class ShapeBuilder {
     }
 
     public void endBuildCompoundShape() {
+        if (stack.isEmpty()) {
+            return;
+        }
         Shape compoundShape = (CompoundShape) stack.pop();
         String color = colorStack.pop();
         String text = textStack.pop();

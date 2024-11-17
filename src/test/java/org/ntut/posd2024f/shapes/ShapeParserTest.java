@@ -170,7 +170,6 @@ public class ShapeParserTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             parser.parse();
         });
-        parser.parse();
         assertEquals("Expected token '['", exception.getMessage());
     }
 
@@ -183,7 +182,6 @@ public class ShapeParserTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             parser.parse();
         });
-        parser.parse();
         assertEquals("Expected token ']'", exception.getMessage());
     }
 
@@ -196,7 +194,6 @@ public class ShapeParserTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             parser.parse();
         });
-        parser.parse();
         assertEquals("Expected token ','", exception.getMessage());
     }
 
@@ -231,7 +228,6 @@ public class ShapeParserTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             parser.parse();
         });
-        parser.parse();
         assertEquals("Expected token '['", exception.getMessage());
     }
 
@@ -244,7 +240,6 @@ public class ShapeParserTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             parser.parse();
         });
-        parser.parse();
         assertEquals("Expected token ']'", exception.getMessage());
     }
 
@@ -257,7 +252,6 @@ public class ShapeParserTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             parser.parse();
         });
-        parser.parse();
         assertEquals("Expected token ','", exception.getMessage());
     }
 
@@ -306,7 +300,6 @@ public class ShapeParserTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             parser.parse();
         });
-        parser.parse();
         assertEquals("Expected token '{'", exception.getMessage());
     }
 
@@ -319,7 +312,6 @@ public class ShapeParserTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             parser.parse();
         });
-        parser.parse();
         assertEquals("Expected token '{'", exception.getMessage());
     }
 
@@ -332,7 +324,6 @@ public class ShapeParserTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             parser.parse();
         });
-        parser.parse();
         assertEquals("Expected token '}'", exception.getMessage());
     }
 
@@ -345,7 +336,6 @@ public class ShapeParserTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             parser.parse();
         });
-        parser.parse();
         assertEquals("Expected token '}'", exception.getMessage());
     }
 
@@ -406,9 +396,9 @@ public class ShapeParserTest {
     // other test
     @Test
     public void testStringSplit() {
-        String line = "Circle 3.0";
+        String line = "}  ";
         // split : 'Circle 3.0', 'color=RED', 'text=This is a circle'
-        String[] info = line.split(", ");
-        assertEquals("Circle 3.0", info[0]);
+        String[] info = line.split(" ");
+        assertEquals("}", info[0]);
     }
 }

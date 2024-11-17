@@ -21,10 +21,49 @@ public class ShapeParser {
     }
 
     public void parse() {
+        int count_bracket = 0;
         builder = new ShapeBuilder();
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine().trim();
-            parseLine(line);
+            String[] info = line.split(", ");
+
+            // get color and text
+            // tokens[0] = shape, tokens[1] = color, tokens[2] = text
+            List<String> tokens = getToken(info);
+
+            // build shape
+            switch (tokens.get(0)) {
+                case "Circle":
+                    parseCircle(info, tokens.get(1), tokens.get(2));
+                    break;
+                case "Rectangle":
+                    parseRectangle(info, tokens.get(1), tokens.get(2));
+                    break;
+                case "Triangle":
+                    parseTriangle(info, tokens.get(1), tokens.get(2));
+                    break;
+                case "ConvexPolygon":
+                    parseConvexPolygon(info, tokens.get(1), tokens.get(2));
+                    break;
+                case "CompoundShape":
+                    count_bracket++;
+                    parseCompoundShape(info, tokens.get(1), tokens.get(2));
+                    if (info[info.length - 1].contains("{") && info[info.length - 1].contains("}")) {
+                        builder.endBuildCompoundShape();
+                        count_bracket--;
+                    }
+                    break;
+                case "}":
+                    builder.endBuildCompoundShape();
+                    count_bracket--;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (count_bracket != 0) {
+            throw new IllegalArgumentException("Expected token '}'");
         }
         shapes = builder.getResult();
     }
@@ -53,6 +92,9 @@ public class ShapeParser {
             case "CompoundShape":
                 parseCompoundShape(info, tokens.get(1), tokens.get(2));
                 break;
+            case "}":
+                builder.endBuildCompoundShape();
+                break;
             default:
                 break;
         }
@@ -66,7 +108,7 @@ public class ShapeParser {
     private void parseRectangle(String[] info, String color, String text) {
         double width = Double.parseDouble(info[0].split(" ")[1]);
         double height = Double.parseDouble(info[0].split(" ")[2]);
-         builder.buildRectangle(width, height, color, text);
+        builder.buildRectangle(width, height, color, text);
     }
 
     private void parseTriangle(String[] info, String color, String text) {
@@ -90,32 +132,10 @@ public class ShapeParser {
     }
 
     private void parseCompoundShape(String[] info, String color, String text) {
-        Boolean isFirst = true;
-        int length = info.length;
-
-        // check if it is a empty compound shape
-        if (!info[length - 1].contains("{")) {
+        if (!info[info.length - 1].contains("{")) {
             throw new IllegalArgumentException("Expected token '{'");
         }
         builder.beginBuildCompoundShape(color, text);
-        if (isFirst && info[length - 1].contains("}")) {
-            builder.endBuildCompoundShape();
-            return;
-        }
-        isFirst = false;
-
-        // parse compound shape
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            if (line.trim().equals("}")) {
-                builder.endBuildCompoundShape();
-                return;
-            }
-            parseLine(line);
-        }
-        
-        // check if there is no '}' at the end of the file
-        throw new IllegalArgumentException("Expected token '}'");
     }
 
     // getToken from string[]
