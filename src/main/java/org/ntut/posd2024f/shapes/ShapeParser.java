@@ -47,10 +47,10 @@ public class ShapeParser {
 
     public void parseLine(String line) {
         try (Scanner scanner = new Scanner(line)) {
-            scanner.useDelimiter(",\\s+");
+            scanner.useDelimiter(",\\s+|(?=\\{)");
             String shape = scanner.next().trim();
             // get color and text
-            String[] info = {null, null};
+            String[] info = {null, null, null};
             while (scanner.hasNext()) {
                 parseInfo(scanner.next().trim() , info);
             }
@@ -64,15 +64,16 @@ public class ShapeParser {
         try (Scanner scanner = new Scanner(info)) {
             scanner.useDelimiter("=");
             String key = scanner.next().trim();
-            String value = scanner.next().trim();
             switch (key) {
                 case "color":
-                    tokens[0] = value;
+                    tokens[0] = scanner.next().trim();
                     break;
                 case "text":
-                    tokens[1] = value;
+                    tokens[1] = scanner.next().trim();
                     break;
                 default:
+                    // get {}
+                    tokens[2] = key;
                     break;
             }
         } catch (Exception e) {
@@ -105,19 +106,15 @@ public class ShapeParser {
                     builder.buildConvexPolygon(vectors2, info[0], info[1]);
                     break;
                 case "CompoundShape":
-                    String check = (info[1] == null) ? info[0] : info[1];
-                    check = (check == null) ? shape : check;
-                    String text = (info[1] == null) ? null : info[1].substring(0, info[1].indexOf("{") - 1);
-                    String color = (info[0] == null) ? null : info[0].trim();
-                    if (color != null && color.contains("{")) {
-                        color = color.substring(0, color.indexOf("{") - 1);
-                    }
-                    if (!check.contains("{")) {
+                    String check = info[2];
+                    if (check != null && check.contains("{")) {
+                        expectOpenBracket++;
+                    } else {
                         throw new IllegalArgumentException("Expected token '{'");
                     }
-                    builder.beginBuildCompoundShape(color, text);
-                    expectOpenBracket++;
-                    if (check.contains("}")) {
+                    builder.beginBuildCompoundShape(info[0], info[1]);
+
+                    if (check != null && check.contains("}")) {
                         builder.endBuildCompoundShape();
                         expectOpenBracket--;
                     }
@@ -139,29 +136,48 @@ public class ShapeParser {
 
     public List<TwoDimensionalVector> parseTwoDimensionalVectors(Scanner scanner) {
         List<TwoDimensionalVector> vectors = new ArrayList<TwoDimensionalVector>();
-        scanner.useDelimiter("\\s+|(?<=\\[)|(?=\\[)|(?<=\\])|(?=\\])|(?<=,)|(?=,)");
-        if (!scanner.hasNext("\\[")) {
-            throw new IllegalArgumentException("Expected token '['");
-        }
-
+        int count = 0;
+        int[] coordinates = {0, 0, 0};
+        scanner.useDelimiter("");
         while (scanner.hasNext()) {
-            if (!scanner.next().equals("[")) {
-                throw new IllegalArgumentException("Expected token '['");
+            String token = scanner.next();
+            switch (token) {
+                case "[":
+                    if (count != 0) {
+                        throw new IllegalArgumentException("Expected token ']'");
+                    }
+                    count++;
+                    break;
+                case ",":
+                    if (count != 1) {
+                        throw new IllegalArgumentException("Expected token '['");
+                    }
+                    count++;
+                    break;
+                case "]":
+                    if (count != 2) {
+                        throw new IllegalArgumentException("Expected token ','");
+                    }
+                    vectors.add(new TwoDimensionalVector(coordinates[1], coordinates[2]));
+                    coordinates[1] = 0;
+                    coordinates[2] = 0;
+                    count = 0;
+                    break;
+                case " ":
+                    break;
+                default:
+                    if (count > 2) {
+                        throw new IllegalArgumentException("Expected token ']'");
+                    } else if (count == 0) {
+                        throw new IllegalArgumentException("Expected token '['");
+                    }
+                    coordinates[count] = coordinates[count] * 10 + Integer.parseInt(token);
+                    break;
             }
-            int x = scanner.nextInt();
-            if (!scanner.hasNext(",")) {
-                throw new IllegalArgumentException("Expected token ','");
-            }
-            scanner.next();
-            int y = scanner.nextInt();
-            if (!scanner.hasNext("\\]")) {
-                throw new IllegalArgumentException("Expected token ']'");
-            }
-            scanner.next();
-            vectors.add(new TwoDimensionalVector(x, y));
         }
-
-
+        if (count != 0) {
+            throw new IllegalArgumentException("Expected token ']'");
+        }
         return vectors;
     }
 

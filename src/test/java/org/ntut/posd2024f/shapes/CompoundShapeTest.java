@@ -151,4 +151,20 @@ public class CompoundShapeTest {
         s = s.substring(0, s.indexOf("{"));
         System.out.println(s);
     }
+
+    @Test
+    public void foo2() {
+        String input = "CompoundShape, text=This is a compound shape {}\n" + 
+                        "CompoundShape, text=This is a compound shape {\n" + 
+                        "  Circle 3.0\n" + 
+                        "  Rectangle 3.0 4.0\n" + 
+                        "}";
+        Scanner scanner = new Scanner(input).useDelimiter(",\\s+|(?=\\{)");
+
+        while (scanner.hasNext()) {
+            String token = scanner.next();
+            System.out.println(token);
+        }
+        scanner.close();
+    }
 }
