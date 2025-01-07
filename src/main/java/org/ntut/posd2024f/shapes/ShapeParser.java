@@ -31,7 +31,10 @@ public class ShapeParser {
         try (Scanner scanner = new Scanner(file)) {
             scanner.useDelimiter("\n");
             while (scanner.hasNext()) {
-                parseLine(scanner.next().trim());
+                String line = scanner.next().trim();
+                if (line != null && !line.isEmpty()) {
+                    parseLine(line);
+                }
             }
             if (expectOpenBracket != 0) {
                 throw new IllegalArgumentException("Expected token '}'");
