@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 import org.junit.jupiter.api.Test;
 
@@ -390,6 +391,18 @@ public class ShapeParserTest {
         assertEquals(1, shapes.size());
         assertEquals(CompoundShape.class, shapes.get(0).getClass());
         assertEquals(CompoundShape.class, shapes.get(0).iterator().next().getClass());
+    }
+    
+    @Test
+    public void testParseVectors() {
+        String vecs = "[1,1] [4,1] [1,5]";
+        Scanner scanner = new Scanner(vecs);
+
+        String path = "src/test_data/emptyCompoundShape2.txt";
+        File file = new File(path);
+        ShapeParser parser = new ShapeParser(file);
+        List<TwoDimensionalVector> vectors = parser.parseTwoDimensionalVectors(scanner);
+        assertEquals(3, vectors.size());
     }
 
 

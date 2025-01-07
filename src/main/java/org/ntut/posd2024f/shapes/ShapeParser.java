@@ -10,6 +10,7 @@ public class ShapeParser {
     private List<Shape> shapes = null;
     private ShapeBuilder builder = null;
     private File file = null;
+    private int expectOpenBracket = 0;
 
     public ShapeParser(File file) {
         try (Scanner scanner = new Scanner(file)) {
@@ -23,6 +24,148 @@ public class ShapeParser {
     }
 
     public void parse() {
+        parseFix();
+    }
+
+    public void parseFix() {
+        try (Scanner scanner = new Scanner(file)) {
+            scanner.useDelimiter("\n");
+            while (scanner.hasNext()) {
+                parseLine(scanner.next().trim());
+            }
+            if (expectOpenBracket != 0) {
+                throw new IllegalArgumentException("Expected token '}'");
+            }
+            shapes = builder.getResult();
+        } catch (IOException e) {
+            throw new RuntimeException("File not found");
+        }
+    }
+
+    public void parseLine(String line) {
+        try (Scanner scanner = new Scanner(line)) {
+            scanner.useDelimiter(",\\s+");
+            String shape = scanner.next().trim();
+            // get color and text
+            String[] info = {null, null};
+            while (scanner.hasNext()) {
+                parseInfo(scanner.next().trim() , info);
+            }
+            parseShape(shape, info);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void parseInfo(String info , String[] tokens) {
+        try (Scanner scanner = new Scanner(info)) {
+            scanner.useDelimiter("=");
+            String key = scanner.next().trim();
+            String value = scanner.next().trim();
+            switch (key) {
+                case "color":
+                    tokens[0] = value;
+                    break;
+                case "text":
+                    tokens[1] = value;
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void parseShape(String shape, String[] info) {
+        try (Scanner scanner = new Scanner(shape)) {
+            scanner.useDelimiter(" ");
+            String shapeType = scanner.next();
+            switch (shapeType) {
+                case "Circle":
+                    double radius = scanner.nextDouble();
+                    builder.buildCircle(radius, info[0], info[1]);
+                    break;
+                case "Rectangle":
+                    double width = scanner.nextDouble();
+                    double height = scanner.nextDouble();
+                    builder.buildRectangle(width, height, info[0], info[1]);
+                    break;
+                case "Triangle":
+                    List<TwoDimensionalVector> vectors;
+                    vectors = parseTwoDimensionalVectors(scanner);
+                    builder.buildTriangle(vectors, info[0], info[1]);
+                    break;
+                case "ConvexPolygon":
+                    List<TwoDimensionalVector> vectors2;
+                    vectors2 = parseTwoDimensionalVectors(scanner);
+                    builder.buildConvexPolygon(vectors2, info[0], info[1]);
+                    break;
+                case "CompoundShape":
+                    String check = (info[1] == null) ? info[0] : info[1];
+                    check = (check == null) ? shape : check;
+                    String text = (info[1] == null) ? null : info[1].substring(0, info[1].indexOf("{") - 1);
+                    String color = (info[0] == null) ? null : info[0].trim();
+                    if (color != null && color.contains("{")) {
+                        color = color.substring(0, color.indexOf("{") - 1);
+                    }
+                    if (!check.contains("{")) {
+                        throw new IllegalArgumentException("Expected token '{'");
+                    }
+                    builder.beginBuildCompoundShape(color, text);
+                    expectOpenBracket++;
+                    if (check.contains("}")) {
+                        builder.endBuildCompoundShape();
+                        expectOpenBracket--;
+                    }
+                    break;
+                case "}":
+                    if (expectOpenBracket == 0) {
+                        throw new IllegalArgumentException("Expected token '{'");
+                    }
+                    builder.endBuildCompoundShape();
+                    expectOpenBracket--;
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public List<TwoDimensionalVector> parseTwoDimensionalVectors(Scanner scanner) {
+        List<TwoDimensionalVector> vectors = new ArrayList<TwoDimensionalVector>();
+        scanner.useDelimiter("\\s+|(?<=\\[)|(?=\\[)|(?<=\\])|(?=\\])|(?<=,)|(?=,)");
+        if (!scanner.hasNext("\\[")) {
+            throw new IllegalArgumentException("Expected token '['");
+        }
+
+        while (scanner.hasNext()) {
+            if (!scanner.next().equals("[")) {
+                throw new IllegalArgumentException("Expected token '['");
+            }
+            int x = scanner.nextInt();
+            if (!scanner.hasNext(",")) {
+                throw new IllegalArgumentException("Expected token ','");
+            }
+            scanner.next();
+            int y = scanner.nextInt();
+            if (!scanner.hasNext("\\]")) {
+                throw new IllegalArgumentException("Expected token ']'");
+            }
+            scanner.next();
+            vectors.add(new TwoDimensionalVector(x, y));
+        }
+
+
+        return vectors;
+    }
+
+
+    // ========================================================================================================
+    @Deprecated
+    public void parseBefore() {
         try (Scanner scanner = new Scanner(file)) {
             int count_bracket = 0;
 

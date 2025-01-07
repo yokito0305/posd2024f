@@ -2,8 +2,10 @@ package org.ntut.posd2024f.shapes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.junit.jupiter.api.Test;
 
@@ -102,4 +104,72 @@ public class TriangleTest {
         Triangle triangle = new Triangle(vectors);
         assertEquals(vectors, triangle.getVectors());
     }
+
+    @Test
+    public void foo() {
+        String input = "Triangle [1,1] [4,1] [1,5], color=RED, text=This is a triangle";
+        Scanner scanner = new Scanner(input).useDelimiter(", ");
+
+        while (scanner.hasNext()) {
+            String token = scanner.next();
+            System.out.println(token);
+        }
+        scanner.close();
+    }
+
+    @Test
+    public void foo2() {
+        String input = "Triangle [1,1] [4,1] [1,5], color=RED, text=This is a triangle\n" + 
+                        "CompoundShape {\n" + 
+                        "  Circle 3.0\n" + 
+                        "  Rectangle 3.0 4.0\n" + 
+                        "}";
+        Scanner scanner = new Scanner(input).useDelimiter(", ");
+
+        while (scanner.hasNext()) {
+            String token = scanner.next();
+            System.out.println(token);
+        }
+        scanner.close();
+    }
+
+    @Test
+    public void foo3TestVector() {
+        String input = " [13,1] [4,1] [1,5]";
+        Scanner scanner = new Scanner(input);
+        scanner.useDelimiter("\\s+|(?<=\\[)|(?=\\[)|(?<=\\])|(?=\\])|(?<=,)|(?=,)");
+        assertEquals("[", scanner.next());
+        assertEquals("13", scanner.next());
+        assertEquals(",", scanner.next());
+        assertEquals("1", scanner.next());
+        assertEquals("]", scanner.next());
+        assertEquals("[", scanner.next());
+        assertEquals("4", scanner.next());
+        assertEquals(",", scanner.next());
+        assertEquals("1", scanner.next());
+        assertEquals("]", scanner.next());
+        assertEquals("[", scanner.next());
+        assertEquals("1", scanner.next());
+        assertEquals(",", scanner.next());
+        assertEquals("5", scanner.next());
+        assertEquals("]", scanner.next());
+
+        scanner.close();
+    }
+
+    @Test
+    public void testParseTriangle() {
+        String input = "Triangle [1,1] [4,1] [1,5]";
+        String path = "src/test_data/emptyCompoundShape2.txt";
+        File file = new File(path);
+        ShapeParser parser = new ShapeParser(file);
+        Scanner scanner = new Scanner(input);
+
+        scanner.useDelimiter(" ");
+        assertEquals("Triangle", scanner.next());
+
+        List<TwoDimensionalVector> vectors = parser.parseTwoDimensionalVectors(scanner);
+        assertEquals(3, vectors.size());
+
+       }
 }

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 import org.junit.jupiter.api.Test;
 
@@ -142,5 +143,12 @@ public class CompoundShapeTest {
         Iterator<Shape> iterator = compoundShape.iterator();
         assertTrue(iterator.hasNext());
         assertEquals(circle.getClass(), iterator.next().getClass());
+    }
+
+    @Test
+    public void foo() {
+        String s = "text=This is a compound shape {}";
+        s = s.substring(0, s.indexOf("{"));
+        System.out.println(s);
     }
 }
